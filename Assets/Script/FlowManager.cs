@@ -24,6 +24,8 @@ public class FlowManager : MonoBehaviour
         public int PelletsNeed;
         public int PelletSpawnCount;
         public List<GameObject> EnemyPrefabs;
+
+        public GameObject GridPrefab;
     }
 
     public GameObject ScorePelletPrefab;
@@ -32,6 +34,7 @@ public class FlowManager : MonoBehaviour
 
     public uint ScorePerLevel = 100;
 
+    public GameObject CurrentGridLevel = null;
 
     public enum GameState
     {
@@ -60,6 +63,9 @@ public class FlowManager : MonoBehaviour
     public bool IsGameRunning => CurrentState == GameState.Playing;
 
     private bool firstUpdate = false;
+
+    [HideInInspector]
+    public List<GameObject> ObjectsToDestroyOnLevelEnd = new List<GameObject>();
 
     void Awake()
     {
@@ -122,6 +128,24 @@ public class FlowManager : MonoBehaviour
         PlayingScreenCanvas.alpha = 0f;
         ScoreScreenCanvas.alpha = 0f;
         ProgressedLevelCanvas.alpha = 0f;
+    }
+
+    public GameObject GetGridForCurrentLevel()
+    {
+        if (LevelTunings.Count == 0)
+        {
+#if UNITY_EDITOR
+            throw new Exception("Pellet count per level not set up at all.");
+#endif
+            return null;
+        }
+
+        if (CurrentLevel >= LevelTunings.Count)
+        {
+            return LevelTunings[LevelTunings.Count - 1].GridPrefab;
+        }
+
+        return LevelTunings[CurrentLevel].GridPrefab;
     }
 
     public int GetPelletGoalForCurrentLevel()
@@ -215,6 +239,7 @@ public class FlowManager : MonoBehaviour
 
     public bool HasEnoughScoreToProgress()
     {
+        return true;
         return CurrentScore >= GetPelletGoalForCurrentLevel();
     }
 
@@ -248,6 +273,15 @@ public class FlowManager : MonoBehaviour
         }
     }
 
+    void DestroyAdditionalGameObjects()
+    {
+        for (int i = ObjectsToDestroyOnLevelEnd.Count - 1; i >= 0; i--)
+        {
+            Destroy(ObjectsToDestroyOnLevelEnd[i]);
+            ObjectsToDestroyOnLevelEnd.RemoveAt(i);
+        }
+    }
+
     void TransitionToPrePlay(bool isGameInit = false)
     {
         DestroyAllEnemyActors();
@@ -261,7 +295,12 @@ public class FlowManager : MonoBehaviour
         prePlayTimer = 3f;
         PrePlayCountdownText.text = "3";
         prePlayerSpawnTimer = 0f;
-        
+
+        if (CurrentGridLevel)
+        {
+            Destroy(CurrentGridLevel);
+        }
+
         if (isGameInit)
         {
             CurrentLevel = 0;
@@ -282,6 +321,12 @@ public class FlowManager : MonoBehaviour
         prePlayTimer -= GameConfig.GetDeltaTime();
         ProcessPrePlayEnemySpawning();
         ProcessPrePlayPelletSpawning();
+
+        if (CurrentGridLevel == null)
+        {
+            var prefabToUse = GetGridForCurrentLevel();
+            CurrentGridLevel = (GameObject) Instantiate(prefabToUse, prefabToUse.transform.position, Quaternion.identity);
+        }
 
         if (prePlayTimer <= 2f && prePlayTimer > 1f)
         {
@@ -425,6 +470,7 @@ public class FlowManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            DestroyAdditionalGameObjects();
             TransitionToPrePlay(true);
         }
     }
@@ -449,6 +495,7 @@ public class FlowManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            DestroyAdditionalGameObjects();
             TransitionToPrePlay();
             CurrentLevel++;
         }
