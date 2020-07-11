@@ -13,6 +13,9 @@ using Random = UnityEngine.Random;
 
 public class GridManager : MonoBehaviour
 {
+    public TileBase FloorTile;
+    public TileBase DoorTile;
+
     public const int INVALID_TILE_VAL = -9999;
 
     public const float TILE_SIZE = 1f;
@@ -115,6 +118,7 @@ public class GridManager : MonoBehaviour
                     var gridPos = new Vector2Int(x + 1, y + 1);
 
                     doorTileList.Add(gridPos, false);
+                    EditorTilemap.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), doorTileList.Count % 2 == 0 ? DoorTile : FloorTile);
 
                     if (doorTileList.Count % 2 == 0)
                     {
@@ -147,7 +151,7 @@ public class GridManager : MonoBehaviour
         CacheCollision();
     }
 
-    public void ToggleNearestDoor(Vector2Int nearPos)
+    public bool ToggleNearestDoor(Vector2Int nearPos)
     {
         float bestDist = 9999f;
         Vector2Int nearestDoor = INVALID_TILE;
@@ -169,12 +173,19 @@ public class GridManager : MonoBehaviour
             // Toggle the state of the nearest door
             doorTileList[nearestDoor] = !doorTileList[nearestDoor];
 
+            EditorTilemap.SetTile(new Vector3Int(nearestDoor.x - 1, nearestDoor.y - 1, 0), doorTileList[nearestDoor] ? DoorTile : FloorTile);
+
             // Toggle the nearest doors linked door and do the same
             if (doorTileLinks.ContainsKey(nearestDoor) && doorTileList.ContainsKey(doorTileLinks[nearestDoor]))
             {
                 doorTileList[doorTileLinks[nearestDoor]] = !doorTileList[doorTileLinks[nearestDoor]];
+                EditorTilemap.SetTile(new Vector3Int(doorTileLinks[nearestDoor].x - 1, doorTileLinks[nearestDoor].y - 1, 0), doorTileList[doorTileLinks[nearestDoor]] ? DoorTile : FloorTile);
             }
+
+            return true;
         }
+
+        return false;
     }
 
     public bool HasGridLos(Vector2Int origin, Vector2Int destination)

@@ -40,6 +40,10 @@ public class FlowManager : MonoBehaviour
 
     public bool DebugPassCurrentLevel = false;
 
+#if UNITY_EDITOR
+    public bool DebugIgnoreEnemySpawning = false;
+#endif
+
     public GameState CurrentState;
     public int CurrentLevel;
     public uint CurrentScore;
@@ -237,6 +241,13 @@ public class FlowManager : MonoBehaviour
 
     void ProcessPrePlayEnemySpawning()
     {
+#if UNITY_EDITOR
+        if (DebugIgnoreEnemySpawning)
+        {
+            return;
+        }
+#endif
+
         if (GridActor.GetNumberOfEnemies() >= GetMaximumSpawnsForCurrentLevel())
         {
             return;
@@ -263,6 +274,13 @@ public class FlowManager : MonoBehaviour
     /// </summary>
     void SpawnAllRemainingEnemies()
     {
+#if UNITY_EDITOR
+        if (DebugIgnoreEnemySpawning)
+        {
+            return;
+        }
+#endif
+
         if (GridActor.GetNumberOfEnemies() >= GetMaximumSpawnsForCurrentLevel())
         {
             return;
