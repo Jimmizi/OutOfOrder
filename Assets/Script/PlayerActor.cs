@@ -12,7 +12,7 @@ public class PlayerActor : GridActor
     // Start is called before the first frame update
     void Start()
     {
-        
+        Service.Flow.ObjectsToDestroyOnLevelEnd.Add(this.gameObject);
     }
 
     bool IsDirectionFreeToMoveIn(Vector2 dir)

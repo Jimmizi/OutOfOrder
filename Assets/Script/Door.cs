@@ -67,6 +67,8 @@ public class Door : MonoBehaviour
 
     void Start()
     {
+        Service.Flow.ObjectsToDestroyOnLevelEnd.Add(this.gameObject);
+
         if (Renderer)
         {
             Renderer.sprite = _isOpen ? _OpenSprite : _ClosedSprite;

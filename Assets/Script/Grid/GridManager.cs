@@ -14,8 +14,14 @@ using Random = UnityEngine.Random;
 
 public class GridManager : MonoBehaviour
 {
-    public TileBase FloorTile;
+    public TileBase OpenDoorTile;
     public TileBase DoorTile;
+    public TileBase FloorTile;
+
+    public GameObject PlayerPrefab;
+    public GameObject LevelGoalPrefab;
+    public GameObject HorizontalDoorPrefab;
+    public GameObject VerticalDoorPrefab;
 
     public const int INVALID_TILE_VAL = -9999;
 
@@ -31,7 +37,7 @@ public class GridManager : MonoBehaviour
     /// <summary>
     /// Tilemap given by the editor
     /// </summary>
-    public Tilemap EditorTilemap;
+    public Tilemap EditorTilemapRef;
 
     // Min and max bounds of the playable grid
     private Vector2Int minBounds;
@@ -56,7 +62,7 @@ public class GridManager : MonoBehaviour
     /// List of doors on tiles, if locked, dictionary second element will be true
     /// </summary>
     private Dictionary<Vector2Int, bool> doorTileList = new Dictionary<Vector2Int, bool>();
-
+    private Dictionary<Vector2Int, Door> doorDataToObjectList = new Dictionary<Vector2Int, Door>();
     private Dictionary<Vector2Int, Vector2Int> doorTileLinks = new Dictionary<Vector2Int, Vector2Int>();
 
     private bool DoesTileNameHaveCollision(string tileName)
@@ -83,6 +89,30 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    private bool IsTileNamePlayerSpawn(string tileName)
+    {
+        switch (tileName)
+        {
+            case "Debug_PlayerSprite":
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    private bool IsTileNameLevelGoalSpawn(string tileName)
+    {
+        switch (tileName)
+        {
+            case "Debug_LevelGoal":
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     /// <summary>
     /// Cache all the hard (static) collision on the level
     /// </summary>
@@ -95,7 +125,7 @@ public class GridManager : MonoBehaviour
         {
             for (var y = minBounds.y; y < maxBounds.y; y++)
             {
-                var t = EditorTilemap.GetTile(new Vector3Int(x, y, 0));
+                var t = EditorTilemapRef.GetTile(new Vector3Int(x, y, 0));
 
                 if (!tileHardCollision.ContainsKey(x))
                 {
@@ -114,21 +144,66 @@ public class GridManager : MonoBehaviour
                     validTileList.Add(new Vector2Int(x+1,y+1));
                 }
 
-                if (t && IsTileNameADoor(t.name))
+                if (t == null)
                 {
-                    var gridPos = new Vector2Int(x + 1, y + 1);
+                    continue;
+                }
 
-                    doorTileList.Add(gridPos, false);
-                    EditorTilemap.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), doorTileList.Count % 2 == 0 ? DoorTile : FloorTile);
+                var gridPos = new Vector2Int(x + 1, y + 1);
+
+                if (IsTileNameADoor(t.name))
+                {
+                    doorTileList.Add(gridPos, false); // open
+                    EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), FloorTile);
+
+                    var leftTile = EditorTilemapRef.GetTile(new Vector3Int(x - 1, y, 0));
+                    var rightTile = EditorTilemapRef.GetTile(new Vector3Int(x + 1, y, 0));
+                    var upwardsTile = EditorTilemapRef.GetTile(new Vector3Int(x, y + 1, 0));
+                    var downwardsTile = EditorTilemapRef.GetTile(new Vector3Int(x, y - 1, 0));
+
+                    GameObject doorGo = null;
+
+                    if (leftTile && rightTile && upwardsTile && downwardsTile)
+                    {
+                        // Is it vertical?
+                        if (DoesTileNameHaveCollision(upwardsTile.name) && DoesTileNameHaveCollision(downwardsTile.name))
+                        {
+                            doorGo = (GameObject)Instantiate(VerticalDoorPrefab, new Vector3(gridPos.x, gridPos.y, 0), Quaternion.identity);
+                        }
+                        else // Otherwise horizontal
+                        {
+                            doorGo = (GameObject)Instantiate(HorizontalDoorPrefab, new Vector3(gridPos.x, gridPos.y, 0), Quaternion.identity);
+                        }
+                    }
 
                     if (doorTileList.Count % 2 == 0)
                     {
-                        doorTileList[gridPos] = true;
+                        doorTileList[gridPos] = true; //closed
 
                         //Link the current "true" door to the previous "false" door
                         doorTileLinks.Add(doorTileList.ElementAt(doorTileList.Count - 1).Key, doorTileList.ElementAt(doorTileList.Count - 2).Key);
                         doorTileLinks.Add(doorTileList.ElementAt(doorTileList.Count - 2).Key, doorTileList.ElementAt(doorTileList.Count - 1).Key);
                     }
+
+                    if (doorGo != null)
+                    {
+                        var doorComp = doorGo.GetComponent<Door>();
+                        if (doorComp)
+                        {
+                            doorComp.isOpen = !doorTileList[gridPos];
+                            doorDataToObjectList.Add(gridPos, doorComp);
+                        }
+                    }
+                }
+                else if (IsTileNamePlayerSpawn(t.name))
+                {
+                    EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), FloorTile);
+                    var playerGo = (GameObject) Instantiate(PlayerPrefab, new Vector3(gridPos.x, gridPos.y, 0), Quaternion.identity);
+                }
+                else if (IsTileNameLevelGoalSpawn(t.name))
+                {
+                    EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), FloorTile);
+                    var playerGo = (GameObject)Instantiate(LevelGoalPrefab, new Vector3(gridPos.x, gridPos.y, 0), Quaternion.identity);
                 }
             }
         }
@@ -142,12 +217,12 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var bounds = EditorTilemap.cellBounds;
+        var bounds = EditorTilemapRef.cellBounds;
 
         minBounds = new Vector2Int(bounds.min.x, bounds.min.y);
         maxBounds = new Vector2Int(bounds.max.x, bounds.max.y);
 
-        tileList = EditorTilemap.GetTilesBlock(bounds);
+        tileList = EditorTilemapRef.GetTilesBlock(bounds);
 
         CacheCollision();
     }
@@ -174,13 +249,20 @@ public class GridManager : MonoBehaviour
             // Toggle the state of the nearest door
             doorTileList[nearestDoor] = !doorTileList[nearestDoor];
 
-            EditorTilemap.SetTile(new Vector3Int(nearestDoor.x - 1, nearestDoor.y - 1, 0), doorTileList[nearestDoor] ? DoorTile : FloorTile);
+            if (doorDataToObjectList.ContainsKey(nearestDoor))
+            {
+                doorDataToObjectList[nearestDoor].isOpen = !doorTileList[nearestDoor];
+            }
 
             // Toggle the nearest doors linked door and do the same
             if (doorTileLinks.ContainsKey(nearestDoor) && doorTileList.ContainsKey(doorTileLinks[nearestDoor]))
             {
                 doorTileList[doorTileLinks[nearestDoor]] = !doorTileList[doorTileLinks[nearestDoor]];
-                EditorTilemap.SetTile(new Vector3Int(doorTileLinks[nearestDoor].x - 1, doorTileLinks[nearestDoor].y - 1, 0), doorTileList[doorTileLinks[nearestDoor]] ? DoorTile : FloorTile);
+
+                if (doorDataToObjectList.ContainsKey(doorTileLinks[nearestDoor]))
+                {
+                    doorDataToObjectList[doorTileLinks[nearestDoor]].isOpen = !doorTileList[doorTileLinks[nearestDoor]];
+                }
             }
 
             return true;

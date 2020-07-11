@@ -7,7 +7,7 @@ public class LevelGoal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Service.Flow.ObjectsToDestroyOnLevelEnd.Add(this.gameObject);
     }
 
     // Update is called once per frame
