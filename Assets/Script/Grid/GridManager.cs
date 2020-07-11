@@ -14,9 +14,11 @@ using Random = UnityEngine.Random;
 
 public class GridManager : MonoBehaviour
 {
-    public TileBase OpenDoorTile;
-    public TileBase DoorTile;
-    public TileBase FloorTile;
+ 
+    public TileBase HorizontalFloorTile;
+    public TileBase VerticalFloorTile;
+    public TileBase FloorTileGeneric;
+    public TileBase WallTileGeneric;
 
     public GameObject PlayerPrefab;
     public GameObject LevelGoalPrefab;
@@ -67,14 +69,21 @@ public class GridManager : MonoBehaviour
 
     private bool DoesTileNameHaveCollision(string tileName)
     {
-        switch (tileName)
+        if (!tileName.Contains("Floor") && !tileName.Contains("floor"))
         {
-            case "Debug_WallSprite":
-                return true;
-
-            default:
-                return false;
+            return true;
         }
+
+        return false;
+
+        //switch (tileName)
+        //{
+        //    case "Debug_WallSprite":
+        //        return true;
+
+        //    default:
+        //        return false;
+        //}
     }
 
     private bool IsTileNameADoor(string tileName)
@@ -154,8 +163,7 @@ public class GridManager : MonoBehaviour
                 if (IsTileNameADoor(t.name))
                 {
                     doorTileList.Add(gridPos, false); // open
-                    EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), FloorTile);
-
+                    
                     var leftTile = EditorTilemapRef.GetTile(new Vector3Int(x - 1, y, 0));
                     var rightTile = EditorTilemapRef.GetTile(new Vector3Int(x + 1, y, 0));
                     var upwardsTile = EditorTilemapRef.GetTile(new Vector3Int(x, y + 1, 0));
@@ -168,12 +176,17 @@ public class GridManager : MonoBehaviour
                         // Is it vertical?
                         if (DoesTileNameHaveCollision(upwardsTile.name) && DoesTileNameHaveCollision(downwardsTile.name))
                         {
-                            doorGo = (GameObject)Instantiate(VerticalDoorPrefab, new Vector3(gridPos.x, gridPos.y, 0), Quaternion.identity);
+                            doorGo = (GameObject)Instantiate(VerticalDoorPrefab, new Vector3(gridPos.x - 0.5f, gridPos.y - 0.5f, 0), Quaternion.identity);
+                            EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), VerticalFloorTile);
                         }
                         else // Otherwise horizontal
                         {
-                            doorGo = (GameObject)Instantiate(HorizontalDoorPrefab, new Vector3(gridPos.x, gridPos.y, 0), Quaternion.identity);
+                            doorGo = (GameObject)Instantiate(HorizontalDoorPrefab, new Vector3(gridPos.x - 0.5f, gridPos.y - 0.5f, 0), Quaternion.identity);
+                            EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), HorizontalFloorTile);
                         }
+
+                        tileHardCollision[x][y] = false;
+                        validTileList.Add(new Vector2Int(x + 1, y + 1));
                     }
 
                     if (doorTileList.Count % 2 == 0)
@@ -197,12 +210,18 @@ public class GridManager : MonoBehaviour
                 }
                 else if (IsTileNamePlayerSpawn(t.name))
                 {
-                    EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), FloorTile);
+                    EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), FloorTileGeneric);
+                    tileHardCollision[x][y] = false;
+                    validTileList.Add(new Vector2Int(x + 1, y + 1));
+
                     var playerGo = (GameObject) Instantiate(PlayerPrefab, new Vector3(gridPos.x, gridPos.y, 0), Quaternion.identity);
                 }
                 else if (IsTileNameLevelGoalSpawn(t.name))
                 {
-                    EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), FloorTile);
+                    EditorTilemapRef.SetTile(new Vector3Int(gridPos.x - 1, gridPos.y - 1, 0), FloorTileGeneric);
+                    tileHardCollision[x][y] = false;
+                    validTileList.Add(new Vector2Int(x + 1, y + 1));
+
                     var playerGo = (GameObject)Instantiate(LevelGoalPrefab, new Vector3(gridPos.x, gridPos.y, 0), Quaternion.identity);
                 }
             }
@@ -217,6 +236,11 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (EditorTilemapRef == null)
+        {
+            EditorTilemapRef = GetComponent<Tilemap>();
+        }
+
         var bounds = EditorTilemapRef.cellBounds;
 
         minBounds = new Vector2Int(bounds.min.x, bounds.min.y);
