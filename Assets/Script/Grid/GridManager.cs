@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -291,6 +292,69 @@ public class GridManager : MonoBehaviour
     {
         int randomElement = Random.Range(0, validTileList.Count);
         return validTileList[randomElement];
+    }
+
+    public struct GetPositionOptions
+    {
+        public List<Vector2Int> AvoidancePoints;
+        public float AvoidanceDistance;
+
+        public bool IgnorePositionedActors;
+        public bool AddEnemiesToBeAvoided;
+    }
+    
+    public Vector2Int GetPositionOnGrid(GetPositionOptions opt)
+    {
+        Dictionary<Vector2Int, float> tileScores = new Dictionary<Vector2Int, float>();
+
+        foreach (var point in validTileList)
+        {
+            float score = 1f;
+
+            if (!opt.IgnorePositionedActors && IsActorOnPoint(point))
+            {
+                continue;
+                
+            }
+
+            foreach(var avdPoint in opt.AvoidancePoints)
+            {
+                var dist = Vector2.Distance(avdPoint, point);
+                score += dist < opt.AvoidanceDistance ? dist : opt.AvoidanceDistance;
+            }
+
+            if (opt.AddEnemiesToBeAvoided)
+            {
+                foreach (var actor in GridActor.ActorList)
+                {
+                    if (actor.tag != "enemy")
+                    {
+                        continue;
+                    }
+
+                    var pos = actor.GetGridPosition();
+
+                    var dist = Vector2.Distance(pos, point);
+                    score += dist < opt.AvoidanceDistance ? dist : opt.AvoidanceDistance;
+                }
+            }
+
+            tileScores.Add(point, score);
+        }
+
+        float highestScore = 1f;
+        Vector2Int bestTile = INVALID_TILE;
+
+        foreach (var score in tileScores)
+        {
+            if (bestTile == INVALID_TILE || score.Value > highestScore)
+            {
+                highestScore = score.Value;
+                bestTile = score.Key;
+            }
+        }
+
+        return bestTile;
     }
 
     public bool IsNextPointFreeOfNpcs(Path path)

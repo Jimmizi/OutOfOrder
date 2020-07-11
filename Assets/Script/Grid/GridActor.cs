@@ -8,6 +8,23 @@ public class GridActor : MonoBehaviour
 
     public static List<GridActor> ActorList = new List<GridActor>();
 
+    public bool UseNonLinearMovement = true;
+
+    public static int GetNumberOfEnemies()
+    {
+        int numEnemies = 0;
+
+        foreach (var actor in ActorList)
+        {
+            if (actor.tag == "enemy")
+            {
+                numEnemies++;
+            }
+        }
+
+        return numEnemies;
+    }
+
     public static int GetNumberOfActorsChasing()
     {
         int numChasing = 0;
@@ -25,7 +42,6 @@ public class GridActor : MonoBehaviour
 
         return numChasing;
     }
-
 
     public float MoveSpeed = 2.0f;
 
@@ -93,7 +109,20 @@ public class GridActor : MonoBehaviour
             }
         }
 
-        transform.position = Vector3.Lerp(transform.position, nextPos, GameConfig.GetDeltaTime() * MoveSpeed);
+        if (!UseNonLinearMovement)
+        {
+            transform.position = Vector3.Lerp(transform.position, nextPos, GameConfig.GetDeltaTime() * MoveSpeed);
+        }
+        else
+        {
+            var heading = nextPos - GetWorldPosition();
+            var dist = heading.magnitude;
+            var dir = heading / dist;
+
+            var moveDir = new Vector3(dir.x, dir.y, 0);
+
+            transform.position += moveDir * (GameConfig.GetDeltaTime() * MoveSpeed);
+        }
 
         return false;
     }

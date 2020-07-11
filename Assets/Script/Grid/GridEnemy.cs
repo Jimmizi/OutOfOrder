@@ -84,6 +84,11 @@ public class GridEnemy : GridActor
     // Update is called once per frame
     public override void Update()
     {
+        if (!Service.Flow.IsGameRunning)
+        {
+            return;
+        }
+
         base.Update();
 
         stateTimer += GameConfig.GetDeltaTime();
@@ -438,6 +443,14 @@ public class GridEnemy : GridActor
     void StateGoto()
     {
 
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.transform.tag == "Player")
+        {
+            Service.Flow.SetGameOver();
+        }
     }
 
     #endregion
