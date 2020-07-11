@@ -1169,8 +1169,8 @@ Tilemap:
   - first: {x: -11, y: -8, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2312,8 +2312,8 @@ Tilemap:
   - first: {x: -4, y: -3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2465,8 +2465,8 @@ Tilemap:
   - first: {x: -11, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3095,8 +3095,8 @@ Tilemap:
   - first: {x: -3, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3662,8 +3662,8 @@ Tilemap:
   - first: {x: -12, y: 5, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -4149,13 +4149,17 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 162
     m_Data: {fileID: 11400000, guid: 81f5b88c6773e9740b59e0e07562e904, type: 2}
-  - m_RefCount: 201
+  - m_RefCount: 196
     m_Data: {fileID: 11400000, guid: e4a9618c768837d4eb0a3988b9931c1b, type: 2}
+  - m_RefCount: 5
+    m_Data: {fileID: 11400000, guid: 5380f8da126e7724da604272ebbcf7a0, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 162
     m_Data: {fileID: 21300000, guid: 389df872177e9644ea15b60e3afc6f45, type: 3}
-  - m_RefCount: 201
+  - m_RefCount: 196
     m_Data: {fileID: 21300000, guid: f664262a4c21a844082e26225955bc6b, type: 3}
+  - m_RefCount: 5
+    m_Data: {fileID: 21300000, guid: d3e695066366f2247b9afe89ada0054d, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 363
     m_Data:
@@ -4249,6 +4253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseNonLinearMovement: 1
   MoveSpeed: 2
+  DebugOpenNearbyDoor: 0
 --- !u!212 &1058152531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4320,7 +4325,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1058152529}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

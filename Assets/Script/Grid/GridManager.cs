@@ -48,11 +48,30 @@ public class GridManager : MonoBehaviour
     /// </summary>
     private List<Vector2Int> validTileList = new List<Vector2Int>();
 
+    /// <summary>
+    /// List of doors on tiles, if locked, dictionary second element will be true
+    /// </summary>
+    private Dictionary<Vector2Int, bool> doorTileList = new Dictionary<Vector2Int, bool>();
+
+    private Dictionary<Vector2Int, Vector2Int> doorTileLinks = new Dictionary<Vector2Int, Vector2Int>();
+
     private bool DoesTileNameHaveCollision(string tileName)
     {
         switch (tileName)
         {
             case "Debug_WallSprite":
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    private bool IsTileNameADoor(string tileName)
+    {
+        switch (tileName)
+        {
+            case "Debug_DoorSprite":
                 return true;
 
             default:
@@ -90,6 +109,22 @@ public class GridManager : MonoBehaviour
                 {
                     validTileList.Add(new Vector2Int(x+1,y+1));
                 }
+
+                if (t && IsTileNameADoor(t.name))
+                {
+                    var gridPos = new Vector2Int(x + 1, y + 1);
+
+                    doorTileList.Add(gridPos, false);
+
+                    if (doorTileList.Count % 2 == 0)
+                    {
+                        doorTileList[gridPos] = true;
+
+                        //Link the current "true" door to the previous "false" door
+                        doorTileLinks.Add(doorTileList.ElementAt(doorTileList.Count - 1).Key, doorTileList.ElementAt(doorTileList.Count - 2).Key);
+                        doorTileLinks.Add(doorTileList.ElementAt(doorTileList.Count - 2).Key, doorTileList.ElementAt(doorTileList.Count - 1).Key);
+                    }
+                }
             }
         }
     }
@@ -109,8 +144,37 @@ public class GridManager : MonoBehaviour
 
         tileList = EditorTilemap.GetTilesBlock(bounds);
 
-
         CacheCollision();
+    }
+
+    public void ToggleNearestDoor(Vector2Int nearPos)
+    {
+        float bestDist = 9999f;
+        Vector2Int nearestDoor = INVALID_TILE;
+
+        foreach (var door in doorTileList)
+        {
+            var dist = Vector2.Distance(door.Key, nearPos);
+
+            if (dist < bestDist)
+            {
+                bestDist = dist;
+                nearestDoor = door.Key;
+            }
+        }
+
+        // Times 1.5f for a little distance buffer
+        if (bestDist < TILE_SIZE * 1.5f)
+        {
+            // Toggle the state of the nearest door
+            doorTileList[nearestDoor] = !doorTileList[nearestDoor];
+
+            // Toggle the nearest doors linked door and do the same
+            if (doorTileLinks.ContainsKey(nearestDoor) && doorTileList.ContainsKey(doorTileLinks[nearestDoor]))
+            {
+                doorTileList[doorTileLinks[nearestDoor]] = !doorTileList[doorTileLinks[nearestDoor]];
+            }
+        }
     }
 
     public bool HasGridLos(Vector2Int origin, Vector2Int destination)
@@ -185,6 +249,11 @@ public class GridManager : MonoBehaviour
                 {
                     // Not a valid walkable tile
                     if (!validTileList.Contains(p))
+                    {
+                        return;
+                    }
+
+                    if (DoesTileContainAClosedDoor(p))
                     {
                         return;
                     }
@@ -269,9 +338,19 @@ public class GridManager : MonoBehaviour
             {
                 return true;
             }
+
+            if (doorTileList.ContainsKey(tile) && doorTileList[tile])
+            {
+                return true;
+            }
         }
 
         return false;
+    }
+
+    public bool DoesTileContainAClosedDoor(Vector2Int point)
+    {
+        return doorTileList.ContainsKey(point) && doorTileList[point];
     }
 
     #region Utility
@@ -477,17 +556,38 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+        foreach(var door in doorTileList)
+        {
+            if (door.Value)
+            {
+                Gizmos.color = new Color(1, 0, 0, 1f);
+            }
+            else
+            {
+                Gizmos.color = new Color(0, 1, 0, 1f);
+            }
+
+            Gizmos.DrawCube(new Vector3(door.Key.x, door.Key.y, 0), new Vector3(0.25f, 0.25f, 0.25f));
+        }
+
+        foreach (var doorLink in doorTileLinks)
+        {
+            Gizmos.color = Color.magenta;
+
+            Gizmos.DrawLine(new Vector3(doorLink.Key.x, doorLink.Key.y), new Vector3(doorLink.Value.x, doorLink.Value.y));
+        }
+
         for (int x = minBounds.x; x < maxBounds.x; x++)
         {
             for (int y = minBounds.y; y < maxBounds.y; y++)
             {
                 if (validTileList.Contains(new Vector2Int(x, y)))
                 {
-                    Gizmos.color = new Color(0, 1, 0, 0.25f);
+                    Gizmos.color = new Color(0, 1, 0, 0.15f);
                 }
                 else
                 {
-                    Gizmos.color = new Color(1, 0, 0, 0.25f);
+                    Gizmos.color = new Color(1, 0, 0, 0.15f);
                 }
 
                 Gizmos.DrawCube(new Vector3(x, y, 0), new Vector3(1f, 1f, 1f));

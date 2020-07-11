@@ -94,10 +94,20 @@ public class GridActor : MonoBehaviour
 
         var nextPos = path.GetNextWorldPosition();
 
+        if (nextPos == GridManager.INVALID_TILE)
+        {
+            return true;
+        }
+
         if (Vector2.Distance(GetWorldPosition(), nextPos) < PATH_POINT_THRESHOLD)
         {
             path.IncrementPoint();
             nextPos = path.GetNextWorldPosition();
+
+            if (nextPos == GridManager.INVALID_TILE)
+            {
+                return true;
+            }
 
             if (quitIfPathIsBlocked && !Service.Grid.IsNextPointFreeOfNpcs(path))
             {
@@ -106,6 +116,12 @@ public class GridActor : MonoBehaviour
                 {
                     return true;
                 }
+            }
+
+            if (Service.Grid.DoesTileContainAClosedDoor(path.GetNextGridPosition())
+                || Service.Grid.DoesTileContainAClosedDoor(path.GetNextGridPosition(1)))
+            {
+                return true;
             }
         }
 

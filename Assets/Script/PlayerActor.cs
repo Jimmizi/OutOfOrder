@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerActor : GridActor
 {
+    public bool DebugOpenNearbyDoor;
+
     void Awake()
     {
         Service.Player = this;
@@ -18,6 +20,12 @@ public class PlayerActor : GridActor
     // Update is called once per frame
     void Update()
     {
-        
+#if UNITY_EDITOR
+        if (DebugOpenNearbyDoor)
+        {
+            DebugOpenNearbyDoor = false;
+            Service.Grid.ToggleNearestDoor(GetGridPosition());
+        }
+#endif
     }
 }

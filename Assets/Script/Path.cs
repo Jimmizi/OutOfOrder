@@ -50,12 +50,27 @@ public class Path
 
     public Vector2 GetNextWorldPosition()
     {
+        if (!IsValid)
+        {
+            return GridManager.INVALID_TILE;
+        }
+
         if (CurrentPoint >= Size)
         {
             return new Vector2(GridPoints[Size - 1].x, GridPoints[Size - 1].y);
         }
 
         return new Vector2(GridPoints[CurrentPoint].x, GridPoints[CurrentPoint].y);
+    }
+
+    public Vector2Int GetNextGridPosition(int offset = 0)
+    {
+        if (CurrentPoint + offset >= Size)
+        {
+            return new Vector2Int(GridPoints[Size - 1].x, GridPoints[Size - 1].y);
+        }
+
+        return new Vector2Int(GridPoints[CurrentPoint + offset].x, GridPoints[CurrentPoint + offset].y);
     }
 
     public Vector2Int GetEndPosition()
