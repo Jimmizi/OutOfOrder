@@ -14,7 +14,10 @@ using Random = UnityEngine.Random;
 
 public class GridManager : MonoBehaviour
 {
- 
+#if UNITY_EDITOR
+    public bool DrawDebug = false;
+#endif
+
     public TileBase HorizontalFloorTile;
     public TileBase VerticalFloorTile;
     public TileBase FloorTileGeneric;
@@ -695,6 +698,12 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+#if UNITY_EDITOR
+        if (!DrawDebug)
+        {
+            return;
+        }
+#endif
         foreach(var door in doorTileList)
         {
             if (door.Value)
