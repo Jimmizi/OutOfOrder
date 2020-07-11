@@ -64,7 +64,7 @@ TextureImporter:
     second: Floor_T_Alt
   - first:
       213: 825183402222977783
-    second: Floor_Vertical
+    second: Floor_Vert
   - first:
       213: -7796967200539375840
     second: Lift
@@ -76,16 +76,16 @@ TextureImporter:
     second: Plant_T
   - first:
       213: 5786550824646578748
-    second: Base_24
+    second: Door_Horz_Closed
   - first:
       213: 6854569940319916244
-    second: Base_25
+    second: Door_Horz_Open
   - first:
       213: 8937744609045253002
-    second: Base_26
+    second: Door_Vert_Closed
   - first:
       213: 1922294896011945344
-    second: Base_27
+    second: Door_Vert_Open
   - first:
       213: -5998917489902418860
     second: Base_28
@@ -639,7 +639,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Floor_Vertical
+      name: Floor_Vert
       rect:
         serializedVersion: 2
         x: 32
@@ -723,13 +723,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base_24
+      name: Door_Horz_Closed
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 8
         width: 8
-        height: 8
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -744,13 +744,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base_25
+      name: Door_Horz_Open
       rect:
         serializedVersion: 2
         x: 8
-        y: 16
+        y: 8
         width: 8
-        height: 8
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -765,13 +765,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base_26
+      name: Door_Vert_Closed
       rect:
         serializedVersion: 2
         x: 16
-        y: 16
+        y: 8
         width: 8
-        height: 8
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -786,13 +786,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base_27
+      name: Door_Vert_Open
       rect:
         serializedVersion: 2
         x: 24
-        y: 16
+        y: 8
         width: 8
-        height: 8
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -886,90 +886,6 @@ TextureImporter:
       bones: []
       spriteID: dcd3addffd380ab50800000000000000
       internalID: 6602422051785031117
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Base_32
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 8
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5bb37febe03b7b9b0800000000000000
-      internalID: -5064382380040045643
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Base_33
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 8
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3615f5a836e099260800000000000000
-      internalID: 7104725707839721827
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Base_34
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 8
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1bb0c833683493b50800000000000000
-      internalID: 6573359374793444273
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Base_35
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 8
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 389fb4056a719f4a0800000000000000
-      internalID: -6559185379209250429
       vertices: []
       indices: 
       edges: []
