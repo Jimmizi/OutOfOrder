@@ -348,6 +348,11 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
+    public bool DoesTileContainADoor(Vector2Int point)
+    {
+        return doorTileList.ContainsKey(point);
+    }
+
     public bool DoesTileContainAClosedDoor(Vector2Int point)
     {
         return doorTileList.ContainsKey(point) && doorTileList[point];
@@ -393,7 +398,11 @@ public class GridManager : MonoBehaviour
             if (!opt.IgnorePositionedActors && IsActorOnPoint(point))
             {
                 continue;
-                
+            }
+
+            if (DoesTileContainADoor(point))
+            {
+                continue;
             }
 
             foreach(var avdPoint in opt.AvoidancePoints)
