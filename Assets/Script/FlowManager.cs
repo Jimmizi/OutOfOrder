@@ -21,8 +21,12 @@ public class FlowManager : MonoBehaviour
     public struct LevelTuning
     {
         public int SpawnCount;
+        public int PelletsNeed;
+        public int PelletSpawnCount;
         public List<GameObject> EnemyPrefabs;
     }
+
+    public GameObject ScorePelletPrefab;
 
     public List<LevelTuning> LevelTunings = new List<LevelTuning>();
 
@@ -50,6 +54,7 @@ public class FlowManager : MonoBehaviour
 
     private float prePlayTimer;
     private float prePlayerSpawnTimer;
+    private float prePlayerPelletSpawnTimer;
 
     public bool IsGameRunning => CurrentState == GameState.Playing;
 
@@ -79,6 +84,7 @@ public class FlowManager : MonoBehaviour
             if (CurrentState == GameState.Playing)
             {
                 SpawnAllRemainingEnemies();
+                SpawnAllRemainingPellets();
             }
         }
 
@@ -111,6 +117,24 @@ public class FlowManager : MonoBehaviour
         PlayingScreenCanvas.alpha = 0f;
         ScoreScreenCanvas.alpha = 0f;
         ProgressedLevelCanvas.alpha = 0f;
+    }
+
+    public int GetPelletCountForCurrentLevel()
+    {
+        if (LevelTunings.Count == 0)
+        {
+#if UNITY_EDITOR
+            throw new Exception("Pellet count per level not set up at all.");
+#endif
+            return 4;
+        }
+
+        if (CurrentLevel >= LevelTunings.Count)
+        {
+            return LevelTunings[LevelTunings.Count - 1].PelletSpawnCount;
+        }
+
+        return LevelTunings[CurrentLevel].PelletSpawnCount;
     }
 
     public int GetMaximumSpawnsForCurrentLevel()
@@ -160,7 +184,12 @@ public class FlowManager : MonoBehaviour
         int randCurrent = Random.Range(0, LevelTunings[CurrentLevel].EnemyPrefabs.Count);
         return LevelTunings[CurrentLevel].EnemyPrefabs[randCurrent];
     }
-        
+
+    public void AddScore()
+    {
+        CurrentScore++;
+    }
+
     public void SetGameOver()
     {
         if (CurrentState == GameState.Playing)
@@ -186,6 +215,7 @@ public class FlowManager : MonoBehaviour
     void TransitionToPrePlay(bool isGameInit = false)
     {
         DestroyAllEnemyActors();
+        DestroyAllRemainingPellets();
 
         ResetCanvasAlphas();
         PrePlayScreenCanvas.alpha = 1.0f;
@@ -215,6 +245,7 @@ public class FlowManager : MonoBehaviour
     {
         prePlayTimer -= GameConfig.GetDeltaTime();
         ProcessPrePlayEnemySpawning();
+        ProcessPrePlayPelletSpawning();
 
         if (prePlayTimer <= 2f && prePlayTimer > 1f)
         {
@@ -236,6 +267,7 @@ public class FlowManager : MonoBehaviour
             CurrentState = GameState.Playing;
 
             SpawnAllRemainingEnemies();
+            SpawnAllRemainingPellets();
         }
     }
 
@@ -267,6 +299,40 @@ public class FlowManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    void DestroyAllRemainingPellets()
+    {
+        for (int i = ScorePellet.PelletList.Count - 1; i >= 0; i--)
+        {
+            Destroy(ScorePellet.PelletList[i].gameObject);
+            ScorePellet.PelletList.RemoveAt(i);
+        }
+    }
+
+    void ProcessPrePlayPelletSpawning()
+    {
+        if (ScorePellet.GetNumberOfPellets() >= GetPelletCountForCurrentLevel())
+        {
+            return;
+        }
+
+        prePlayerPelletSpawnTimer += GameConfig.GetDeltaTime();
+        if (prePlayerPelletSpawnTimer >= GetPelletCountForCurrentLevel() / 2.5f)
+        {
+            prePlayerPelletSpawnTimer = 0f;
+
+            if (!SpawnPelletActor(ScorePelletPrefab))
+            {
+                Debug.LogWarning("Failed to spawn in an enemy during pre play, should probably take a look.");
+            }
+            
+        }
+    }
+
+    void SpawnAllRemainingPellets()
+    {
+
     }
 
     /// <summary>
@@ -340,6 +406,31 @@ public class FlowManager : MonoBehaviour
 
     #endregion
 
+    public bool SpawnPelletActor(GameObject prefab)
+    {
+        if (ScorePellet.GetNumberOfPellets() >= GetPelletCountForCurrentLevel())
+        {
+            return false;
+        }
+
+        GridManager.GetPositionOptions options = new GridManager.GetPositionOptions
+        {
+            AvoidanceDistance = 3.5f,
+            AddPelletsToBeAvoided = true
+        };
+
+        options.AvoidancePoints = new List<Vector2Int>();
+        options.AvoidancePoints.Add(Service.Player.GetGridPosition());
+
+        var foundPosition = Service.Grid.GetPositionOnGrid(options);
+        if (foundPosition == GridManager.INVALID_TILE)
+        {
+            return false;
+        }
+
+        var gameObj = (GameObject)Instantiate(prefab, new Vector3(foundPosition.x, foundPosition.y, 0f), Quaternion.identity);
+        return true;
+    }
 
     public bool SpawnEnemyActor(GameObject prefab)
     {

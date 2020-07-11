@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Xml;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -160,7 +161,7 @@ public class GridManager : MonoBehaviour
         {
             var dist = Vector2.Distance(door.Key, nearPos);
 
-            if (dist < bestDist)
+            if (dist < bestDist && dist > TILE_SIZE * 0.75f)
             {
                 bestDist = dist;
                 nearestDoor = door.Key;
@@ -396,6 +397,7 @@ public class GridManager : MonoBehaviour
 
         public bool IgnorePositionedActors;
         public bool AddEnemiesToBeAvoided;
+        public bool AddPelletsToBeAvoided;
     }
     
     public Vector2Int GetPositionOnGrid(GetPositionOptions opt)
@@ -420,6 +422,17 @@ public class GridManager : MonoBehaviour
             {
                 var dist = Vector2.Distance(avdPoint, point);
                 score += dist < opt.AvoidanceDistance ? dist : opt.AvoidanceDistance;
+            }
+
+            if (opt.AddPelletsToBeAvoided)
+            {
+                foreach (var pellet in ScorePellet.PelletList)
+                {
+                    var pos = pellet.GetGridPosition();
+
+                    var dist = Vector2.Distance(pos, point);
+                    score += dist < opt.AvoidanceDistance ? dist : opt.AvoidanceDistance;
+                }
             }
 
             if (opt.AddEnemiesToBeAvoided)

@@ -4271,7 +4271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseNonLinearMovement: 1
-  MoveSpeed: 2
+  MoveSpeed: 5
 --- !u!212 &1058152531
 SpriteRenderer:
   m_ObjectHideFlags: 0
