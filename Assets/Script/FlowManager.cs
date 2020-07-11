@@ -9,9 +9,13 @@ public class FlowManager : MonoBehaviour
 {
     public CanvasGroup TitleScreenCanvas;
     public CanvasGroup PrePlayScreenCanvas;
+    public CanvasGroup PlayingScreenCanvas;
+    public CanvasGroup ProgressedLevelCanvas;
     public CanvasGroup ScoreScreenCanvas;
 
     public Text PrePlayCountdownText;
+    public Text ProgressedScoreText;
+    public Text ProgressedLevelText;
 
     [Serializable]
     public struct LevelTuning
@@ -22,6 +26,9 @@ public class FlowManager : MonoBehaviour
 
     public List<LevelTuning> LevelTunings = new List<LevelTuning>();
 
+    public uint ScorePerLevel = 100;
+
+
     public enum GameState
     {
         Title,
@@ -31,8 +38,11 @@ public class FlowManager : MonoBehaviour
         GameOver
     }
 
+    public bool DebugPassCurrentLevel = false;
+
     public GameState CurrentState;
     public int CurrentLevel;
+    public uint CurrentScore;
 
     private float prePlayTimer;
     private float prePlayerSpawnTimer;
@@ -49,9 +59,8 @@ public class FlowManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TitleScreenCanvas.alpha = 0f;
-        PrePlayScreenCanvas.alpha = 0f;
-        ScoreScreenCanvas.alpha = 0f;
+        ResetCanvasAlphas();
+        TitleScreenCanvas.alpha = 1f;
     }
 
     #region States
@@ -80,12 +89,24 @@ public class FlowManager : MonoBehaviour
             case GameState.Playing:
                 ProcessPlaying();
                 break;
+            case GameState.ProgressLevel:
+                ProcessProgressionScreen();
+                break;
             case GameState.GameOver:
                 ProcessGameOver();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    void ResetCanvasAlphas()
+    {
+        TitleScreenCanvas.alpha = 0f;
+        PrePlayScreenCanvas.alpha = 0f;
+        PlayingScreenCanvas.alpha = 0f;
+        ScoreScreenCanvas.alpha = 0f;
+        ProgressedLevelCanvas.alpha = 0f;
     }
 
     public int GetMaximumSpawnsForCurrentLevel()
@@ -141,6 +162,8 @@ public class FlowManager : MonoBehaviour
         if (CurrentState == GameState.Playing)
         {
             CurrentState = GameState.GameOver;
+            ResetCanvasAlphas();
+            ScoreScreenCanvas.alpha = 1f;
         }
     }
 
@@ -156,32 +179,37 @@ public class FlowManager : MonoBehaviour
         }
     }
 
-    void TransitionToPrePlay()
+    void TransitionToPrePlay(bool isGameInit = false)
     {
+        DestroyAllEnemyActors();
+
+        ResetCanvasAlphas();
+        PrePlayScreenCanvas.alpha = 1.0f;
+
         CurrentState = GameState.PrePlaying;
 
         prePlayTimer = 3f;
         PrePlayCountdownText.text = "3";
-        CurrentLevel = 0;
         prePlayerSpawnTimer = 0f;
+        
+        if (isGameInit)
+        {
+            CurrentLevel = 0;
+            CurrentScore = 0;
+        }
     }
 
     void ProcessTitle()
     {
-        TitleScreenCanvas.alpha = 1f;
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            TitleScreenCanvas.alpha = 0.0f;
-            TransitionToPrePlay();
+            TransitionToPrePlay(true);
         }
     }
 
     void ProcessPrePlaying()
     {
         prePlayTimer -= GameConfig.GetDeltaTime();
-        PrePlayScreenCanvas.alpha = 1.0f;
-
         ProcessPrePlayEnemySpawning();
 
         if (prePlayTimer <= 2f && prePlayTimer > 1f)
@@ -198,7 +226,9 @@ public class FlowManager : MonoBehaviour
         }
         else if(prePlayTimer <= -0.4f)
         {
-            PrePlayScreenCanvas.alpha = 0.0f;
+            ResetCanvasAlphas();
+            PlayingScreenCanvas.alpha = 1f;
+
             CurrentState = GameState.Playing;
 
             SpawnAllRemainingEnemies();
@@ -252,18 +282,41 @@ public class FlowManager : MonoBehaviour
 
     void ProcessPlaying()
     {
-
+#if UNITY_EDITOR
+        if (DebugPassCurrentLevel)
+        {
+            DebugPassCurrentLevel = false;
+            ProgressCurrentLevel();
+        }
+#endif
     }
 
     void ProcessGameOver()
     {
-        ScoreScreenCanvas.alpha = 1f;
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ScoreScreenCanvas.alpha = 0f;
-            DestroyAllEnemyActors();
+            TransitionToPrePlay(true);
+        }
+    }
+
+    void ProgressCurrentLevel()
+    {
+        ResetCanvasAlphas();
+        ProgressedLevelCanvas.alpha = 1f;
+
+        ProgressedLevelText.text = $"Level: {CurrentLevel}";
+        ProgressedScoreText.text = $"Score: {CurrentScore}";
+
+        CurrentState = GameState.ProgressLevel;
+        CurrentScore += ScorePerLevel;
+    }
+
+    void ProcessProgressionScreen()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             TransitionToPrePlay();
+            CurrentLevel++;
         }
     }
 
