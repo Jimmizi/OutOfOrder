@@ -133,3 +133,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc1151fc8347ef40b03ff373264a28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseNonLinearMovement: 1
+  MoveSpeed: 0.5

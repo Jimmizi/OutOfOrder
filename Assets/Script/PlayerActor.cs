@@ -7,6 +7,12 @@ public class PlayerActor : GridActor
     void Awake()
     {
         Service.Player = this;
+
+        var camFollow = Camera.main.GetComponent<CameraFollow>();
+        if (camFollow)
+        {
+            camFollow.ManuallySetFollowPlayer();
+        }
     }
 
     // Start is called before the first frame update

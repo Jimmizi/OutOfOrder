@@ -12,11 +12,19 @@ public class CameraFollow : MonoBehaviour
     public GameObject FollowTarget;
 
     private float nullTimerOnReentry;
+    private float slowDownTimer = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    public void ManuallySetFollowPlayer()
+    {
+        FollowTarget = Service.Player.gameObject;
+        nullTimerOnReentry = 0f;
+        slowDownTimer = 0f;
     }
 
     // Update is called once per frame
@@ -33,13 +41,28 @@ public class CameraFollow : MonoBehaviour
                 nullTimerOnReentry -= GameConfig.GetDeltaTime();
                 if (nullTimerOnReentry <= 0f)
                 {
-                    FollowTarget = null;
+                    slowDownTimer = 2f;
                     return;
                 }
             }
         }
 
-        transform.position = Vector3.Lerp(transform.position, new Vector3(FollowTarget.transform.position.x, FollowTarget.transform.position.y, transform.position.z), FollowSpeed * GameConfig.GetDeltaTime());
+        float speedMod = 1f;
+
+        if (slowDownTimer > 0f)
+        {
+            slowDownTimer -= GameConfig.GetDeltaTime();
+
+            if (slowDownTimer <= 0f)
+            {
+                FollowTarget = null;
+                return;
+            }
+
+            speedMod = slowDownTimer / 2f;
+        }
+
+        transform.position = Vector3.Lerp(transform.position, new Vector3(FollowTarget.transform.position.x, FollowTarget.transform.position.y, transform.position.z), FollowSpeed * GameConfig.GetDeltaTime() * speedMod);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -47,6 +70,7 @@ public class CameraFollow : MonoBehaviour
         if (other.tag == "Player")
         {
             nullTimerOnReentry = 1f;
+            slowDownTimer = 0f;
         }
     }
 
@@ -56,6 +80,7 @@ public class CameraFollow : MonoBehaviour
         {
             FollowTarget = other.gameObject;
             nullTimerOnReentry = 0f;
+            slowDownTimer = 0f;
         }
     }
 
