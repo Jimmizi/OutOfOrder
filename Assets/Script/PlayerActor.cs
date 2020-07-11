@@ -34,6 +34,10 @@ public class PlayerActor : GridActor
     // Update is called once per frame
     void Update()
     {
+        if (!Service.Flow.IsGameRunning)
+        {
+            return;
+        }
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
