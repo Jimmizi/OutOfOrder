@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8166360349080310159
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2109196640, guid: c913e4479d917204cae8366872c5f511, type: 3}
+      propertyPath: _OpenSprite
+      value: 
+      objectReference: {fileID: 1922294896011945344, guid: e377584ba2c73514590d9d3b1542c7e4,
+        type: 3}
+    - target: {fileID: 2109196640, guid: c913e4479d917204cae8366872c5f511, type: 3}
+      propertyPath: _ClosedSprite
+      value: 
+      objectReference: {fileID: 8937744609045253002, guid: e377584ba2c73514590d9d3b1542c7e4,
+        type: 3}
+    - target: {fileID: 2457956822303614412, guid: c913e4479d917204cae8366872c5f511,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457956822303614412, guid: c913e4479d917204cae8366872c5f511,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457956822303614412, guid: c913e4479d917204cae8366872c5f511,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457956822303614412, guid: c913e4479d917204cae8366872c5f511,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3203922284534564037, guid: c913e4479d917204cae8366872c5f511,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8937744609045253002, guid: e377584ba2c73514590d9d3b1542c7e4,
+        type: 3}
+    - target: {fileID: 5424888135273583711, guid: c913e4479d917204cae8366872c5f511,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5424888135273583711, guid: c913e4479d917204cae8366872c5f511,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8546456102173534292, guid: c913e4479d917204cae8366872c5f511,
+        type: 3}
+      propertyPath: m_Name
+      value: Door_Vertical Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c913e4479d917204cae8366872c5f511, type: 3}
