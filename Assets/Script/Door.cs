@@ -15,10 +15,28 @@ public class Door : MonoBehaviour
 
     private SpriteRenderer _Renderer;
 
+    private Collider _Collider;
+
     public bool isOpen
     {
         get { return _isOpen; }
-        set { if (value) Open(); else Close(); }
+        set
+        {
+            if (_isOpen == value)
+                return;
+
+            _isOpen = value;
+
+            if (Renderer)
+            {
+                Renderer.sprite = _isOpen ? _OpenSprite : _ClosedSprite;
+            }
+
+            if (Collider)
+            {
+                Collider.enabled = !_isOpen;
+            }
+        }
     }
 
     private SpriteRenderer Renderer
@@ -33,39 +51,25 @@ public class Door : MonoBehaviour
             return _Renderer;
         }
     }
-    
+
+    private Collider Collider
+    {
+        get
+        {
+            if (!_Collider)
+            {
+                _Collider = GetComponent<Collider>();
+            }
+
+            return _Collider;
+        }
+    }
+
     void Start()
     {
         if (Renderer)
         {
             Renderer.sprite = _isOpen ? _OpenSprite : _ClosedSprite;
-        }
-    }
-
-    public void Open()
-    {
-        if (_isOpen)
-            return;
-
-        _isOpen = true;
-
-        if (Renderer)
-        {
-            Renderer.sprite = _OpenSprite;
-        }
-
-    }
-
-    public void Close()
-    {
-        if (!_isOpen)
-            return;
-
-        _isOpen = false;
-
-        if (Renderer)
-        {
-            Renderer.sprite = _ClosedSprite;
         }
     }
 }
