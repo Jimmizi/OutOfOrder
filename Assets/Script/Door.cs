@@ -15,7 +15,7 @@ public class Door : MonoBehaviour
 
     private SpriteRenderer _Renderer;
 
-    private Collider _Collider;
+    private Collider2D _Collider;
 
     public bool isOpen
     {
@@ -52,13 +52,13 @@ public class Door : MonoBehaviour
         }
     }
 
-    private Collider Collider
+    private Collider2D Collider
     {
         get
         {
             if (!_Collider)
             {
-                _Collider = GetComponent<Collider>();
+                _Collider = GetComponent<Collider2D>();
             }
 
             return _Collider;
@@ -72,6 +72,12 @@ public class Door : MonoBehaviour
         if (Renderer)
         {
             Renderer.sprite = _isOpen ? _OpenSprite : _ClosedSprite;
+        }
+
+        if (Collider)
+        {
+            Collider.enabled = !isOpen;
+            
         }
     }
 }

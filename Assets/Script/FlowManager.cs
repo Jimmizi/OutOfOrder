@@ -34,6 +34,7 @@ public class FlowManager : MonoBehaviour
 
     public uint ScorePerLevel = 100;
 
+    [HideInInspector]
     public GameObject CurrentGridLevel = null;
 
     public enum GameState
@@ -239,7 +240,6 @@ public class FlowManager : MonoBehaviour
 
     public bool HasEnoughScoreToProgress()
     {
-        return true;
         return CurrentScore >= GetPelletGoalForCurrentLevel();
     }
 

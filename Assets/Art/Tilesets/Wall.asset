@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Debug_DoorSprite
+  m_Name: Wall
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: d3e695066366f2247b9afe89ada0054d, type: 3}
+  m_Sprite: {fileID: -3590379592227587388, guid: e377584ba2c73514590d9d3b1542c7e4,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -33,4 +34,4 @@ MonoBehaviour:
     e33: 1
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
-  m_ColliderType: 0
+  m_ColliderType: 1

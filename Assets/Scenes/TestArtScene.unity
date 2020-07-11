@@ -561,7 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc3f1e41bb3c4b4a94f835bebeb0c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amount: 1
+  _amount: 0
   _minGlitchChangeTime: 0.1
   _maxGlitchChangeTime: 0.4
   material: {fileID: 2100000, guid: 00bc5de53b3ecfc469e808b6dc546487, type: 2}
@@ -4804,9 +4804,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451a42f708c938640b7069d97a9be164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenDoorTile: {fileID: 0}
-  DoorTile: {fileID: 0}
-  FloorTile: {fileID: 0}
+  DrawDebug: 0
+  HorizontalFloorTile: {fileID: 0}
+  VerticalFloorTile: {fileID: 0}
+  FloorTileGeneric: {fileID: 0}
+  WallTileGeneric: {fileID: 0}
   PlayerPrefab: {fileID: 0}
   LevelGoalPrefab: {fileID: 0}
   HorizontalDoorPrefab: {fileID: 0}
