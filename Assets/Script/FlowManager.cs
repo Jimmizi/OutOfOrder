@@ -51,8 +51,9 @@ public class FlowManager : MonoBehaviour
     public GameState CurrentState;
     public int CurrentLevel;
     public uint CurrentScore;
+    public uint TotalScore;
 
-    private float prePlayTimer;
+    private float prePlayTimer = 3f;
     private float prePlayerSpawnTimer;
     private float prePlayerPelletSpawnTimer;
 
@@ -86,6 +87,10 @@ public class FlowManager : MonoBehaviour
                 SpawnAllRemainingEnemies();
                 SpawnAllRemainingPellets();
             }
+            else if (CurrentState == GameState.PrePlaying)
+            {
+                TransitionToPrePlay(true);
+            }
         }
 
         switch (CurrentState)
@@ -117,6 +122,24 @@ public class FlowManager : MonoBehaviour
         PlayingScreenCanvas.alpha = 0f;
         ScoreScreenCanvas.alpha = 0f;
         ProgressedLevelCanvas.alpha = 0f;
+    }
+
+    public int GetPelletGoalForCurrentLevel()
+    {
+        if (LevelTunings.Count == 0)
+        {
+#if UNITY_EDITOR
+            throw new Exception("Pellet count per level not set up at all.");
+#endif
+            return 1;
+        }
+
+        if (CurrentLevel >= LevelTunings.Count)
+        {
+            return LevelTunings[LevelTunings.Count - 1].PelletsNeed;
+        }
+
+        return LevelTunings[CurrentLevel].PelletsNeed;
     }
 
     public int GetPelletCountForCurrentLevel()
@@ -190,6 +213,19 @@ public class FlowManager : MonoBehaviour
         CurrentScore++;
     }
 
+    public bool HasEnoughScoreToProgress()
+    {
+        return CurrentScore >= GetPelletGoalForCurrentLevel();
+    }
+
+    public void TryToProgressLevel()
+    {
+        if (HasEnoughScoreToProgress())
+        {
+            ProgressCurrentLevel();
+        }
+    }
+
     public void SetGameOver()
     {
         if (CurrentState == GameState.Playing)
@@ -229,7 +265,7 @@ public class FlowManager : MonoBehaviour
         if (isGameInit)
         {
             CurrentLevel = 0;
-            CurrentScore = 0;
+            TotalScore = 0;
         }
     }
 
@@ -286,7 +322,7 @@ public class FlowManager : MonoBehaviour
         }
 
         prePlayerSpawnTimer += GameConfig.GetDeltaTime();
-        if (prePlayerSpawnTimer >= GetMaximumSpawnsForCurrentLevel() / 2.5f)
+        if (prePlayerSpawnTimer >= 2.5f / GetMaximumSpawnsForCurrentLevel())
         {
             prePlayerSpawnTimer = 0f;
 
@@ -318,7 +354,7 @@ public class FlowManager : MonoBehaviour
         }
 
         prePlayerPelletSpawnTimer += GameConfig.GetDeltaTime();
-        if (prePlayerPelletSpawnTimer >= GetPelletCountForCurrentLevel() / 2.5f)
+        if (prePlayerPelletSpawnTimer >= 2.5f / GetPelletCountForCurrentLevel())
         {
             prePlayerPelletSpawnTimer = 0f;
 
@@ -332,7 +368,17 @@ public class FlowManager : MonoBehaviour
 
     void SpawnAllRemainingPellets()
     {
+        if (ScorePellet.GetNumberOfPellets() >= GetPelletCountForCurrentLevel())
+        {
+            return;
+        }
 
+        Debug.LogWarning("Managed to get into SpawnAllRemainingPellets. Should really have spawned all enemies before this point.");
+
+        for (int i = GetPelletCountForCurrentLevel() - ScorePellet.GetNumberOfPellets(); i > 0; i--)
+        {
+            SpawnPelletActor(ScorePelletPrefab);
+        }
     }
 
     /// <summary>
@@ -388,11 +434,15 @@ public class FlowManager : MonoBehaviour
         ResetCanvasAlphas();
         ProgressedLevelCanvas.alpha = 1f;
 
+        TotalScore += CurrentScore;
+        TotalScore += ScorePerLevel;
+
+        CurrentScore = 0;
+
         ProgressedLevelText.text = $"Level: {CurrentLevel}";
-        ProgressedScoreText.text = $"Score: {CurrentScore}";
+        ProgressedScoreText.text = $"Score: {TotalScore}";
 
         CurrentState = GameState.ProgressLevel;
-        CurrentScore += ScorePerLevel;
     }
 
     void ProcessProgressionScreen()

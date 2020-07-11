@@ -406,7 +406,7 @@ public class GridManager : MonoBehaviour
 
         foreach (var point in validTileList)
         {
-            float score = 1f;
+            float score = Random.Range(0.9f, 1.1f);
 
             if (!opt.IgnorePositionedActors && IsActorOnPoint(point))
             {
