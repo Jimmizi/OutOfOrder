@@ -21,7 +21,6 @@ public class GridManager : MonoBehaviour
     public TileBase HorizontalFloorTile;
     public TileBase VerticalFloorTile;
     public TileBase FloorTileGeneric;
-    public TileBase WallTileGeneric;
 
     public GameObject PlayerPrefab;
     public GameObject LevelGoalPrefab;

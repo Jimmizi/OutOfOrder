@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: FakeWallFloor
+  m_Name: Floor Fake
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -4860544939729247871, guid: e377584ba2c73514590d9d3b1542c7e4,
     type: 3}
@@ -34,4 +34,4 @@ MonoBehaviour:
     e33: 1
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
-  m_ColliderType: 0
+  m_ColliderType: 2
