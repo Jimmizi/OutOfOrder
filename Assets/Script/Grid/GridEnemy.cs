@@ -24,10 +24,11 @@ public class GridEnemy : GridActor
     private const float ChaseDuration_Passive = 4.5f;
     private const float ChaseDuration_Aggressive = 15f;
 
-
+    private const int MaximumNumberOfChasers = 3;
 
     private const float TimeBetweenLosCaches = 1f;
     private const float TimeBetweenBreakToChaseChecks = 0.25f;
+    private const float TooManyChasersCooldownCheck = -5.0f;
 
     public enum EnemyBehaviourStyle
     {
@@ -70,17 +71,21 @@ public class GridEnemy : GridActor
 
     public EnemyBehaviourStyle BehaviourStyle;
 
+    public bool IsChasing => fsmState == EnemyFsmState.State_Chase;
+
     // Start is called before the first frame update
-    void Start()
+    public override void Start() 
     {
-        
+        base.Start();
     }
 
     #region States
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update();
+
         stateTimer += GameConfig.GetDeltaTime();
 
         // Always cache the los to the player
@@ -109,15 +114,13 @@ public class GridEnemy : GridActor
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
-        
     }
 
     void ProcessCacheLos()
     {
         losCacheInterval += GameConfig.GetDeltaTime();
 
-        if (losCacheInterval >= TimeBetweenLosCaches) 
+        if (losCacheInterval >= TimeBetweenLosCaches)
         {
             losCacheInterval = 0;
 
@@ -227,13 +230,16 @@ public class GridEnemy : GridActor
 
         breakToChaseStateTimer = 0f;
 
-        // If we want to break out, set fsmPendingState and call QuitCurrentState() & ProgressState()
-
         if (hasLosToPlayer)
         {
+            if (GridActor.GetNumberOfActorsChasing() >= MaximumNumberOfChasers)
+            {
+                breakToChaseStateTimer = TooManyChasersCooldownCheck;
+                return;
+            }
+
             var rand = Random.Range(0, 100f);
             bool doChase = false;
-
 
             switch (BehaviourStyle)
             {

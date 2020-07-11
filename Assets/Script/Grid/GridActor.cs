@@ -4,7 +4,28 @@ using UnityEngine;
 
 public class GridActor : MonoBehaviour
 {
+    private const float StopChanceForNpcsInfront = 50f;
+
     public static List<GridActor> ActorList = new List<GridActor>();
+
+    public static int GetNumberOfActorsChasing()
+    {
+        int numChasing = 0;
+
+        foreach (var actor in ActorList)
+        {
+            if (actor is GridEnemy enemy)
+            {
+                if (enemy.IsChasing)
+                {
+                    numChasing++;
+                }
+            }
+        }
+
+        return numChasing;
+    }
+
 
     public float MoveSpeed = 2.0f;
 
@@ -12,18 +33,18 @@ public class GridActor : MonoBehaviour
     public const float PATH_POINT_THRESHOLD = 0.25f;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         ActorList.Add(this);
     }
 
-    void OnDestroy()
+    public virtual void OnDestroy()
     {
         ActorList.Remove(this);
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         
     }
@@ -64,7 +85,11 @@ public class GridActor : MonoBehaviour
 
             if (quitIfPathIsBlocked && !Service.Grid.IsNextPointFreeOfNpcs(path))
             {
-                return true;
+                // 50 - 50 chance of stopping when another npc in in front of them on the path
+                if (Random.Range(0f, 100f) < StopChanceForNpcsInfront)
+                {
+                    return true;
+                }
             }
         }
 
