@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseNonLinearMovement: 1
-  MoveSpeed: 3.5
+  MoveSpeed: 2
   BehaviourStyle: 0
 --- !u!61 &297827500821739267
 BoxCollider2D:
