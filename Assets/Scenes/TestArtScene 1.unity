@@ -1137,7 +1137,7 @@ MonoBehaviour:
   ScorePerLevel: 100
   CurrentGridLevel: {fileID: 0}
   DebugPassCurrentLevel: 0
-  DebugIgnoreEnemySpawning: 1
+  DebugIgnoreEnemySpawning: 0
   CurrentState: 0
   CurrentLevel: 0
   CurrentScore: 0

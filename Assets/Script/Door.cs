@@ -73,5 +73,11 @@ public class Door : MonoBehaviour
         {
             Renderer.sprite = _isOpen ? _OpenSprite : _ClosedSprite;
         }
+
+        if (Collider)
+        {
+            Collider.enabled = !isOpen;
+            
+        }
     }
 }
