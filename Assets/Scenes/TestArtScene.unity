@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -548,6 +549,22 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bc3f1e41bb3c4b4a94f835bebeb0c5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amount: 1
+  _minGlitchChangeTime: 0.1
+  _maxGlitchChangeTime: 0.4
+  material: {fileID: 2100000, guid: 00bc5de53b3ecfc469e808b6dc546487, type: 2}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -616,7 +633,6 @@ GameObject:
   - component: {fileID: 632827985}
   - component: {fileID: 632827988}
   - component: {fileID: 632827987}
-  - component: {fileID: 632827986}
   m_Layer: 0
   m_Name: FG_Objects
   m_TagString: Untagged
@@ -638,21 +654,6 @@ Transform:
   m_Father: {fileID: 1259833796}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &632827986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 632827984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 451a42f708c938640b7069d97a9be164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FloorTile: {fileID: 0}
-  DoorTile: {fileID: 0}
-  EditorTilemap: {fileID: 632827988}
 --- !u!483693784 &632827987
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -4803,9 +4804,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451a42f708c938640b7069d97a9be164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FloorTile: {fileID: 0}
+  OpenDoorTile: {fileID: 0}
   DoorTile: {fileID: 0}
-  EditorTilemap: {fileID: 1042778753}
+  FloorTile: {fileID: 0}
+  PlayerPrefab: {fileID: 0}
+  LevelGoalPrefab: {fileID: 0}
+  HorizontalDoorPrefab: {fileID: 0}
+  VerticalDoorPrefab: {fileID: 0}
+  EditorTilemapRef: {fileID: 0}
 --- !u!19719996 &1042778755
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -5107,7 +5113,6 @@ GameObject:
   - component: {fileID: 1245096140}
   - component: {fileID: 1245096143}
   - component: {fileID: 1245096142}
-  - component: {fileID: 1245096141}
   - component: {fileID: 1245096144}
   m_Layer: 0
   m_Name: BG_Objects
@@ -5130,21 +5135,6 @@ Transform:
   m_Father: {fileID: 1259833796}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1245096141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245096139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 451a42f708c938640b7069d97a9be164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FloorTile: {fileID: 0}
-  DoorTile: {fileID: 0}
-  EditorTilemap: {fileID: 1245096143}
 --- !u!483693784 &1245096142
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -5672,13 +5662,16 @@ MonoBehaviour:
     PelletSpawnCount: 0
     EnemyPrefabs:
     - {fileID: 297827500821739276, guid: 0cdfbda78f41e7144abfb007c3189092, type: 3}
+    GridPrefab: {fileID: 0}
   ScorePerLevel: 100
+  CurrentGridLevel: {fileID: 0}
   DebugPassCurrentLevel: 0
   DebugIgnoreEnemySpawning: 0
   CurrentState: 0
   CurrentLevel: 0
   CurrentScore: 0
   TotalScore: 0
+  ObjectsToDestroyOnLevelEnd: []
 --- !u!4 &1598215800
 Transform:
   m_ObjectHideFlags: 0
