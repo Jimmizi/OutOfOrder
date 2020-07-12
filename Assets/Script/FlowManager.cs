@@ -7,6 +7,9 @@ using Random = UnityEngine.Random;
 
 public class FlowManager : MonoBehaviour
 {
+    public AudioSource MainMenuMusic;
+    public AudioSource GameMusic;
+
     public const float Score_InternalInSeconds = 4f;
     public const int Score_PerInterval = 1;
 
@@ -470,19 +473,23 @@ public class FlowManager : MonoBehaviour
                 TotalScore += Score_CollectedPellet * 5; // 5 cogs needed to progress to this point
             }
         }
-
+        
         if (CurrentLevel == 0 && !activatedTutorialOne)
         {
             LevelOneTutorialObject.SetActive(true);
+            LevelTwoTutorialObject.SetActive(false);
             activatedTutorialOne = true;
         }
         else if (CurrentLevel == 1 && !activatedTutorialTwo)
         {
+            LevelOneTutorialObject.SetActive(false);
             LevelTwoTutorialObject.SetActive(true);
             activatedTutorialTwo = true;
         }
-
-
+        else
+        {
+            LevelTwoTutorialObject?.SetActive(false);
+        }
     }
 
     bool KeyPressedToProgressFlow()
@@ -492,10 +499,37 @@ public class FlowManager : MonoBehaviour
             Input.GetKeyDown(KeyCode.Return);
     }
 
+    IEnumerator FadeMenuMusic()
+    {
+        while (MainMenuMusic.volume > 0f)
+        {
+            MainMenuMusic.volume -= GameConfig.GetDeltaTime() / 2f;
+            yield return null;
+        }
+
+        MainMenuMusic.Stop();
+
+        GameMusic.volume = 0f;
+        GameMusic.Play();
+
+        while (GameMusic.volume < 1f)
+        {
+            GameMusic.volume += GameConfig.GetDeltaTime();
+            yield return null;
+        }
+
+        GameMusic.volume = 1f;
+
+    }
+
     void ProcessTitle()
     {
         if (KeyPressedToProgressFlow())
         {
+            
+            StartCoroutine("FadeMenuMusic");
+            
+
             TransitionToPrePlay(true);
         }
     }
