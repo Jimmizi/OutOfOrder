@@ -7,6 +7,12 @@ using Random = UnityEngine.Random;
 
 public class FlowManager : MonoBehaviour
 {
+    public const float Score_InternalInSeconds = 4f;
+    public const int Score_PerInterval = 1;
+
+    public const int Score_CollectedPellet = 20;
+    public const int Score_LevelCompleted = 150;
+
     public CanvasGroup TitleScreenCanvas;
     public CanvasGroup PrePlayScreenCanvas;
     public CanvasGroup PlayingScreenCanvas;
@@ -40,7 +46,6 @@ public class FlowManager : MonoBehaviour
 
     public List<LevelTuning> LevelTunings = new List<LevelTuning>();
 
-    public uint ScorePerLevel = 100;
 
     [HideInInspector]
     public GameObject CurrentGridLevel = null;
@@ -62,6 +67,7 @@ public class FlowManager : MonoBehaviour
 
     public GameState CurrentState;
     public int CurrentLevel;
+    public int CurrentPellets;
     public uint CurrentScore;
     public uint TotalScore;
 
@@ -70,6 +76,8 @@ public class FlowManager : MonoBehaviour
     private float prePlayerPelletSpawnTimer;
     private float enoughCogsCollectedTimer;
     private int cogTextTimesToFlash;
+
+    private float scoreIntervalTimer;
 
     private bool hasDoneEnoughCogsFlash = false;
     
@@ -292,19 +300,20 @@ public class FlowManager : MonoBehaviour
 
     public void AddScore()
     {
-        CurrentScore++;
+        CurrentScore += Score_CollectedPellet;
+        CurrentPellets++;
         UpdateScoreText();
     }
 
     private void UpdateScoreText()
     {
-        ScoreCogText.text = $"Cogs: {CurrentScore}";
-        ScoreCogShadowText.text = $"Cogs: {CurrentScore}";
+        ScoreCogText.text = $"Cogs: {CurrentPellets}";
+        ScoreCogShadowText.text = $"Cogs: {CurrentPellets}";
     }
 
     public bool HasEnoughScoreToProgress()
     {
-        return CurrentScore >= GetPelletGoalForCurrentLevel();
+        return CurrentPellets >= GetPelletGoalForCurrentLevel();
     }
 
     public void TryToProgressLevel()
@@ -323,7 +332,7 @@ public class FlowManager : MonoBehaviour
             ResetCanvasAlphas();
             ScoreScreenCanvas.alpha = 1f;
 
-            GameOverLevelText.text = $"Floor: {CurrentLevel}";
+            GameOverLevelText.text = $"Floor: {CurrentLevel+1}";
             GameOverScoreText.text = $"Score: {TotalScore}";
         }
     }
@@ -546,6 +555,13 @@ public class FlowManager : MonoBehaviour
             ProgressCurrentLevel();
         }
 #endif
+
+        scoreIntervalTimer += GameConfig.GetDeltaTime();
+        if (scoreIntervalTimer >= Score_InternalInSeconds)
+        {
+            scoreIntervalTimer = 0f;
+            CurrentScore += Score_PerInterval;
+        }
     }
 
     void ProcessGameOver()
@@ -563,12 +579,12 @@ public class FlowManager : MonoBehaviour
         ProgressedLevelCanvas.alpha = 1f;
 
         TotalScore += CurrentScore;
-        TotalScore += ScorePerLevel;
+        TotalScore += Score_LevelCompleted;
 
-        CurrentScore = 0;
+        CurrentPellets = 0;
         UpdateScoreText();
 
-        ProgressedLevelText.text = $"Floor: {CurrentLevel}";
+        ProgressedLevelText.text = $"Floor: {CurrentLevel+1}";
         ProgressedScoreText.text = $"Score: {TotalScore}";
 
         CurrentState = GameState.ProgressLevel;
