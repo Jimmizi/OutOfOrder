@@ -330,7 +330,7 @@ public class GridManager : MonoBehaviour
         {
             var dist = Vector2.Distance(door.Key, nearPos);
 
-            if (dist < bestDist && dist > TILE_SIZE * 0.35f)
+            if (dist < bestDist && dist > TILE_SIZE * 0.15f)
             {
                 bestDist = dist;
                 nearestDoor = door.Key;

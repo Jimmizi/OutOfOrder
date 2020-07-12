@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5397404778086374899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: fmodProject/gmtk/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637301767864026979
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-2720603903811081957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,12 +32,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: fmodProject/gmtk/Build/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637300010737177589
+  lastModified: 637301767864091949
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 688
+    Value: 778
   Exists: 1
+--- !u!114 &-381524750088330647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/title
+  m_EditorClassIdentifier: 
+  Path: event:/title
+  guid: 57beb893ec32e6428f2a1d8f92313aaf
+  Banks:
+  - {fileID: -5397404778086374899}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 36000
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,14 +75,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: -2720603903811081957}
-  - {fileID: 8395323678605030888}
-  EditorEvents: []
+  - {fileID: -5397404778086374899}
+  EditorEvents:
+  - {fileID: 6256291574107958452}
+  - {fileID: -381524750088330647}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 8395323678605030888}
+  - {fileID: -5397404778086374899}
   StringsBanks:
   - {fileID: -2720603903811081957}
-  stringsBankWriteTime: 637300010737177589
+  stringsBankWriteTime: 637301767864091949
   cacheVersion: 3
 --- !u!114 &4425880939755402347
 MonoBehaviour:
@@ -79,6 +122,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
+--- !u!114 &6256291574107958452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/game
+  m_EditorClassIdentifier: 
+  Path: event:/game
+  guid: 1e043e35c05d544c8a90f047e9b5147a
+  Banks:
+  - {fileID: -5397404778086374899}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 52361
 --- !u!114 &8395323678605030888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,4 +162,4 @@ MonoBehaviour:
   lastModified: 637300010737172591
   LoadResult: 0
   FileSizes: []
-  Exists: 1
+  Exists: 0
