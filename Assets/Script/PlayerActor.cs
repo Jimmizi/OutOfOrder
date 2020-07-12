@@ -4,6 +4,25 @@ using UnityEngine;
 
 public class PlayerActor : GridActor
 {
+    SpriteRenderer _renderer;
+    SpriteRenderer renderer
+    {
+        get
+        {
+            if(!_renderer)
+            {
+                _renderer = GetComponent<SpriteRenderer>();
+            }
+
+            return _renderer;
+        }
+    }
+
+    public Sprite leftSprite;
+    public Sprite rightSprite;
+    public Sprite upSprite;
+    public Sprite downSprite;
+
     void Awake()
     {
         Service.Player = this;
@@ -51,12 +70,22 @@ public class PlayerActor : GridActor
             {
                 transform.position += new Vector3(0, MoveSpeed * GameConfig.GetDeltaTime());
             }
+
+            if (renderer)
+            {
+                renderer.sprite = upSprite;
+            }
         }
         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             if (IsDirectionFreeToMoveIn(Vector2.down))
             {
                 transform.position += new Vector3(0, -MoveSpeed * GameConfig.GetDeltaTime());
+            }
+
+            if (renderer)
+            {
+                renderer.sprite = downSprite;
             }
         }
 
@@ -66,12 +95,22 @@ public class PlayerActor : GridActor
             {
                 transform.position += new Vector3(-MoveSpeed * GameConfig.GetDeltaTime(), 0);
             }
+
+            if(renderer)
+            {
+                renderer.sprite = leftSprite;
+            }
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             if (IsDirectionFreeToMoveIn(Vector2.right))
             {
                 transform.position += new Vector3(MoveSpeed * GameConfig.GetDeltaTime(), 0);
+            }
+
+            if (renderer)
+            {
+                renderer.sprite = rightSprite;
             }
         }
 
