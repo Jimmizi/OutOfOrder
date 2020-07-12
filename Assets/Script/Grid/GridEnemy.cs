@@ -73,6 +73,8 @@ public class GridEnemy : GridActor
 
     public bool IsChasing => fsmState == EnemyFsmState.State_Chase;
 
+    public bool IsMoving => fsmState != EnemyFsmState.State_Wait && fsmState != EnemyFsmState.State_Invalid;
+
     // Start is called before the first frame update
     public override void Start() 
     {

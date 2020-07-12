@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8162065501986941554
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 297827500821739276, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: m_Name
+      value: Jammer1
+      objectReference: {fileID: 0}
+    - target: {fileID: 297827500821739278, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 297827500821739278, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 297827500821739278, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 297827500821739278, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 297827500821739279, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7610360451163615693, guid: 23768208dd24c594bbfe40cbdf455103,
+        type: 3}
+    - target: {fileID: 8518685005917946182, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: IdleFrames.Array.data[0]
+      value: 
+      objectReference: {fileID: -7610360451163615693, guid: 23768208dd24c594bbfe40cbdf455103,
+        type: 3}
+    - target: {fileID: 8518685005917946182, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: MoveFrames.Array.data[0]
+      value: 
+      objectReference: {fileID: -7610360451163615693, guid: 23768208dd24c594bbfe40cbdf455103,
+        type: 3}
+    - target: {fileID: 8518685005917946182, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: MoveFrames.Array.data[1]
+      value: 
+      objectReference: {fileID: 498183232763448062, guid: 23768208dd24c594bbfe40cbdf455103,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0cdfbda78f41e7144abfb007c3189092, type: 3}
