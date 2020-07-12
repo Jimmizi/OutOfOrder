@@ -13,11 +13,17 @@ public class CameraFollow : MonoBehaviour
 
     private float nullTimerOnReentry;
     private float slowDownTimer = 0f;
+    private float teleportedSpeedMod;
 
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    public void SetTeleportedSpeedOverride()
+    {
+        teleportedSpeedMod = 3f;
     }
 
     public void ManuallySetFollowPlayer()
@@ -60,6 +66,12 @@ public class CameraFollow : MonoBehaviour
             }
 
             speedMod = slowDownTimer / 2f;
+        }
+
+        if (teleportedSpeedMod > 1f)
+        {
+            teleportedSpeedMod -= GameConfig.GetDeltaTime();
+            speedMod = teleportedSpeedMod;
         }
 
         transform.position = Vector3.Lerp(transform.position, new Vector3(FollowTarget.transform.position.x, FollowTarget.transform.position.y, transform.position.z), FollowSpeed * GameConfig.GetDeltaTime() * speedMod);

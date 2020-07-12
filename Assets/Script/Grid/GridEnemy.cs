@@ -352,6 +352,17 @@ public class GridEnemy : GridActor
         }
     }
 
+    public void ImmediatelyLosePlayer()
+    {
+        if (fsmState != EnemyFsmState.State_Chase)
+        {
+            return;
+        }
+
+        hasLosToPlayer = false;
+        chasingOutOfSightTimer = 0f;
+    }
+
     void StateChase()
     {
         switch (fsmSubState)
@@ -370,12 +381,12 @@ public class GridEnemy : GridActor
                     if (hasLosToPlayer)
                     {
                         targetPosition = Service.Player.GetGridPosition();
-                        chasingOutOfSightTimer = 0f;
+                        chasingOutOfSightTimer = 0.6f;
                     }
                     else
                     {
                         chasingOutOfSightTimer += GameConfig.GetDeltaTime();
-                        if (chasingOutOfSightTimer < 1.0f)
+                        if (chasingOutOfSightTimer > 0f)
                         {
                             targetPosition = Service.Player.GetGridPosition();
                         }

@@ -42,15 +42,15 @@ public class PlayerActor : GridActor
 
     bool IsDirectionFreeToMoveIn(Vector2 dir)
     {
-        return true;
+        Vector3 offset = new Vector3(0.5f, 0.5f, 0f);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, GridManager.TILE_SIZE);
-        return hit.collider == null;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + offset, dir, GridManager.TILE_SIZE / 2);
+        return hit.collider == null || hit.collider.name != "BG_Tiles";
     }
 
     void InteractNearbyObject()
     {
-        if (Service.Grid.ToggleNearestDoor(GetGridPosition()))
+        if (Service.Grid.ToggleNearestDoor(GetWorldPosition()))
         {
             return;
         }
@@ -119,6 +119,24 @@ public class PlayerActor : GridActor
             InteractNearbyObject();
         }
 
+    }
+
+    void OnDrawGizmos()
+    {
+
+        float size = GridManager.TILE_SIZE / 2;
+
+        Gizmos.color = Color.red;
+
+        Vector3 offset = new Vector3(0.5f, 0.5f, 0f);
+        Vector2 vec2Pos = transform.position + offset;
+        
+
+        Gizmos.DrawLine(transform.position + offset, vec2Pos + new Vector2(0, size));
+        Gizmos.DrawLine(transform.position + offset, vec2Pos + new Vector2(0, -size));
+
+        Gizmos.DrawLine(transform.position + offset, vec2Pos + new Vector2(-size, 0));
+        Gizmos.DrawLine(transform.position + offset, vec2Pos + new Vector2(size, 0));
     }
 
     
