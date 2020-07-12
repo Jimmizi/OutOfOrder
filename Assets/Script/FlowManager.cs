@@ -68,6 +68,11 @@ public class FlowManager : MonoBehaviour
     private float prePlayTimer = 3f;
     private float prePlayerSpawnTimer;
     private float prePlayerPelletSpawnTimer;
+    private float enoughCogsCollectedTimer;
+    private int cogTextTimesToFlash;
+
+    private bool hasDoneEnoughCogsFlash = false;
+    
 
     public bool IsGameRunning => CurrentState == GameState.Playing;
 
@@ -127,6 +132,50 @@ public class FlowManager : MonoBehaviour
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    void ProcessCogsCollectedFlashing()
+    {
+        if (HasEnoughScoreToProgress())
+        {
+            SetHasCollectedEnoughCogs();
+        }
+
+        if (cogTextTimesToFlash <= 0)
+        {
+            return;
+        }
+
+        enoughCogsCollectedTimer += GameConfig.GetDeltaTime();
+        if (enoughCogsCollectedTimer >= 0.5f)
+        {
+            enoughCogsCollectedTimer = 0f;
+            cogTextTimesToFlash--;
+
+            if (cogTextTimesToFlash > 0)
+            {
+                ScoreCogText.enabled = !ScoreCogText.enabled;
+                ScoreCogShadowText.enabled = ScoreCogText.enabled;
+            }
+            else
+            {
+                ScoreCogText.enabled = true;
+                ScoreCogShadowText.enabled = true;
+            }
+        }
+    }
+
+    void SetHasCollectedEnoughCogs()
+    {
+        if (!hasDoneEnoughCogsFlash)
+        {
+            hasDoneEnoughCogsFlash = true;
+
+            cogTextTimesToFlash = 9;
+            enoughCogsCollectedTimer = 0f;
+
+            ScoreCogText.color = new Color(168f / 255f, 192f / 255f, 176f / 255f, 1f);
         }
     }
 
@@ -315,6 +364,8 @@ public class FlowManager : MonoBehaviour
         PrePlayCountdownText_Shadow.text = "3";
         prePlayerSpawnTimer = 0f;
 
+        ScoreCogText.color = new Color(225f / 255f, 240f / 255f, 232f / 255f, 1f);
+
         if (CurrentGridLevel)
         {
             Destroy(CurrentGridLevel);
@@ -486,6 +537,8 @@ public class FlowManager : MonoBehaviour
 
     void ProcessPlaying()
     {
+        ProcessCogsCollectedFlashing();
+
 #if UNITY_EDITOR
         if (DebugPassCurrentLevel)
         {
