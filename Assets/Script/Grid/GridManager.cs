@@ -81,6 +81,11 @@ public class GridManager : MonoBehaviour
         //}
     }
 
+    private bool IsInvisibleCollision(string tileName)
+    {
+        return tileName == "InvisibleCollision";
+    }
+
     private bool IsTileNameADoor(string tileName)
     {
         switch (tileName)
@@ -221,6 +226,7 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
+
     }
 
     void Awake()
@@ -246,7 +252,7 @@ public class GridManager : MonoBehaviour
         CacheCollision();
     }
 
-    public bool ToggleNearestDoor(Vector2Int nearPos)
+    public bool ToggleNearestDoor(Vector2 nearPos)
     {
         float bestDist = 9999f;
         Vector2Int nearestDoor = INVALID_TILE;
@@ -255,7 +261,7 @@ public class GridManager : MonoBehaviour
         {
             var dist = Vector2.Distance(door.Key, nearPos);
 
-            if (dist < bestDist && dist > TILE_SIZE * 0.75f)
+            if (dist < bestDist && dist > TILE_SIZE * 0.45f)
             {
                 bestDist = dist;
                 nearestDoor = door.Key;

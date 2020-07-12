@@ -717,7 +717,6 @@ GameObject:
   - component: {fileID: 734747860}
   - component: {fileID: 734747863}
   - component: {fileID: 734747862}
-  - component: {fileID: 734747861}
   m_Layer: 5
   m_Name: Presstoplay_shadow
   m_TagString: Untagged
@@ -744,24 +743,6 @@ RectTransform:
   m_AnchoredPosition: {x: 2.5, y: -202.5}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &734747861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734747859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dcd4f2c1819ddf47a6c2a398b48d470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PositionOne: {x: 0, y: -200, z: 0}
-  PositionTwo: {x: 0, y: -205, z: 0}
-  PositionOne_Shadow: {x: 0, y: 0, z: 0}
-  PositionTwo_Shadow: {x: 0, y: 0, z: 0}
-  ShadowRectTransform: {fileID: 0}
-  TimeBetweenPositionChange: 1
 --- !u!114 &734747862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -887,9 +868,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositionOne: {x: 0, y: -200, z: 0}
   PositionTwo: {x: 0, y: -205, z: 0}
-  PositionOne_Shadow: {x: 0, y: 0, z: 0}
-  PositionTwo_Shadow: {x: 0, y: 0, z: 0}
-  ShadowRectTransform: {fileID: 0}
+  PositionOne_Shadow: {x: 0, y: -202.5, z: 0}
+  PositionTwo_Shadow: {x: 0, y: -207.5, z: 0}
+  ShadowRectTransform: {fileID: 734747860}
   TimeBetweenPositionChange: 1
 --- !u!114 &789699321
 MonoBehaviour:
@@ -1160,7 +1141,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -1772,9 +1753,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositionOne: {x: 0, y: -200, z: 0}
   PositionTwo: {x: 0, y: -205, z: 0}
-  PositionOne_Shadow: {x: 0, y: 0, z: 0}
-  PositionTwo_Shadow: {x: 0, y: 0, z: 0}
-  ShadowRectTransform: {fileID: 0}
+  PositionOne_Shadow: {x: 0, y: -202.5, z: 0}
+  PositionTwo_Shadow: {x: 0, y: -207.5, z: 0}
+  ShadowRectTransform: {fileID: 1447360367}
   TimeBetweenPositionChange: 1
 --- !u!114 &1281145058
 MonoBehaviour:
@@ -2048,7 +2029,6 @@ GameObject:
   - component: {fileID: 1447360367}
   - component: {fileID: 1447360370}
   - component: {fileID: 1447360369}
-  - component: {fileID: 1447360368}
   m_Layer: 5
   m_Name: Presstoplay_shadow (1)
   m_TagString: Untagged
@@ -2075,24 +2055,6 @@ RectTransform:
   m_AnchoredPosition: {x: 2.5, y: -202.5}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1447360368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1447360366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dcd4f2c1819ddf47a6c2a398b48d470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PositionOne: {x: 0, y: -200, z: 0}
-  PositionTwo: {x: 0, y: -205, z: 0}
-  PositionOne_Shadow: {x: 0, y: 0, z: 0}
-  PositionTwo_Shadow: {x: 0, y: 0, z: 0}
-  ShadowRectTransform: {fileID: 0}
-  TimeBetweenPositionChange: 1
 --- !u!114 &1447360369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2271,7 +2233,7 @@ MonoBehaviour:
   ScorePerLevel: 100
   CurrentGridLevel: {fileID: 0}
   DebugPassCurrentLevel: 0
-  DebugIgnoreEnemySpawning: 1
+  DebugIgnoreEnemySpawning: 0
   CurrentState: 0
   CurrentLevel: 0
   CurrentScore: 0

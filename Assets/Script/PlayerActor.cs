@@ -43,14 +43,13 @@ public class PlayerActor : GridActor
     bool IsDirectionFreeToMoveIn(Vector2 dir)
     {
         return true;
-
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, GridManager.TILE_SIZE);
-        return hit.collider == null;
+        return hit.collider == null || hit.collider.name != "BG_Tiles";
     }
 
     void InteractNearbyObject()
     {
-        if (Service.Grid.ToggleNearestDoor(GetGridPosition()))
+        if (Service.Grid.ToggleNearestDoor(GetWorldPosition()))
         {
             return;
         }

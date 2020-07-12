@@ -10,6 +10,17 @@ public class GridActor : MonoBehaviour
 
     public bool UseNonLinearMovement = true;
 
+    public static void TellEnemiesToLosePlayer()
+    {
+        foreach (var actor in ActorList)
+        {
+            if (actor is GridEnemy enemy)
+            {
+                enemy.ImmediatelyLosePlayer();
+            }
+        }
+    }
+
     public static int GetNumberOfEnemies()
     {
         int numEnemies = 0;
