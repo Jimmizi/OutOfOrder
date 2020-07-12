@@ -88,19 +88,19 @@ TextureImporter:
     second: Door_Vert_Open
   - first:
       213: -5998917489902418860
-    second: Base_28
+    second: Teleport_1
   - first:
       213: -592600719417070233
-    second: Base_29
+    second: Teleport_2
   - first:
       213: -8824930518686111712
-    second: Gear
+    second: Gear_1
   - first:
       213: 6602422051785031117
     second: Plant_B
   - first:
       213: -5064382380040045643
-    second: Base_32
+    second: Gear_2
   - first:
       213: 7104725707839721827
     second: Base_33
@@ -807,7 +807,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base_28
+      name: Teleport_1
       rect:
         serializedVersion: 2
         x: 32
@@ -828,7 +828,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base_29
+      name: Teleport_2
       rect:
         serializedVersion: 2
         x: 40
@@ -849,7 +849,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gear
+      name: Gear_1
       rect:
         serializedVersion: 2
         x: 48
@@ -907,6 +907,27 @@ TextureImporter:
       bones: []
       spriteID: 63a215251df639610800000000000000
       internalID: 1626766835230779958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gear_2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bb37febe03b7b9b0800000000000000
+      internalID: -5064382380040045643
       vertices: []
       indices: 
       edges: []
