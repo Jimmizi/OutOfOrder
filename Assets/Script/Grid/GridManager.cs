@@ -62,8 +62,77 @@ public class GridManager : MonoBehaviour
     private Dictionary<Vector2Int, Door> doorDataToObjectList = new Dictionary<Vector2Int, Door>();
     private Dictionary<Vector2Int, Vector2Int> doorTileLinks = new Dictionary<Vector2Int, Vector2Int>();
 
+    public Vector2Int FindNearestValidTile(Vector2Int point)
+    {
+        if (validTileList.Contains(point))
+        {
+            return point;
+        }
+
+        // Check left
+        if (validTileList.Contains(point + new Vector2Int(-1, 0)))
+        {
+            return point + new Vector2Int(-1, 0);
+        }
+
+        // Check right
+        if (validTileList.Contains(point + new Vector2Int(1, 0)))
+        {
+            return point + new Vector2Int(1, 0);
+        }
+
+        // Check up
+        if (validTileList.Contains(point + new Vector2Int(0, 1)))
+        {
+            return point + new Vector2Int(0, 1);
+        }
+
+        // Check down
+        if (validTileList.Contains(point + new Vector2Int(0, -1)))
+        {
+            return point + new Vector2Int(0, -1);
+        }
+
+        // Diagonals
+
+        // Check left top
+        if (validTileList.Contains(point + new Vector2Int(-1, 1)))
+        {
+            return point + new Vector2Int(-1, 1);
+        }
+
+        // Check right top
+        if (validTileList.Contains(point + new Vector2Int(1, 1)))
+        {
+            return point + new Vector2Int(1, 1);
+        }
+
+        // Check left bot
+        if (validTileList.Contains(point + new Vector2Int(-1, -1)))
+        {
+            return point + new Vector2Int(-1, -1);
+        }
+
+        // Check right bot
+        if (validTileList.Contains(point + new Vector2Int(1, -1)))
+        {
+            return point + new Vector2Int(1, -1);
+        }
+
+#if DEBUG
+        Debug.LogError("Managed to test against a tile nowhere on the valid list");
+#endif
+
+        return GetRandomPositionOnGrid();
+    }
+
     private bool DoesTileNameHaveCollision(string tileName)
     {
+        if (tileName.Contains("Fake") || tileName.Contains("fake"))
+        {
+            return true;
+        }
+
         if (!tileName.Contains("Floor") && !tileName.Contains("floor"))
         {
             return true;
@@ -320,7 +389,7 @@ public class GridManager : MonoBehaviour
     public Path GetPath(Vector2Int origin, Vector2Int destination, PathFindOptions opt)
     {
         List<Vector2Int> returnPath = new List<Vector2Int>();
-        Vector2Int nextLowestScoredTile = new Vector2Int();
+        Vector2Int nextLowestScoredTile = INVALID_TILE;
 
 
         List<Vector2Int> openList = new List<Vector2Int>(), closedList = new List<Vector2Int>();
@@ -419,15 +488,14 @@ public class GridManager : MonoBehaviour
         AddNeighboursToOpenList(origin);
 
         // While we haven't reached the destination and the next point to look at isn't invalid
-        while (nextLowestScoredTile != destination &&
-               nextLowestScoredTile != new Vector2Int(INVALID_TILE_VAL, INVALID_TILE_VAL))
+        while (nextLowestScoredTile != destination)
         {
             nextLowestScoredTile = GetOpenTileWithLowestScore();
 
             if (nextLowestScoredTile == destination ||
                 nextLowestScoredTile == new Vector2Int(INVALID_TILE_VAL, INVALID_TILE_VAL))
             {
-                continue;
+                break;
             }
 
             closedList.Add(nextLowestScoredTile);
@@ -438,6 +506,11 @@ public class GridManager : MonoBehaviour
 
         if (nextLowestScoredTile == destination)
         {
+            if (!parent.ContainsKey(nextLowestScoredTile))
+            {
+                return new Path(null);
+            }
+
             returnPath.Add(nextLowestScoredTile);
             Vector2Int parentNext = parent[nextLowestScoredTile];
 

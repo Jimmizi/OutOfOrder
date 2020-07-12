@@ -92,7 +92,7 @@ public class GridActor : MonoBehaviour
     public float MoveSpeed = 2.0f;
 
     // Threshold for being at a specific cell
-    public const float PATH_POINT_THRESHOLD = 0.25f;
+    public const float PATH_POINT_THRESHOLD = 0.2f;
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -113,12 +113,29 @@ public class GridActor : MonoBehaviour
 
     public Vector2Int GetGridPosition()
     {
-        return new Vector2Int((int) Mathf.Round(transform.position.x), (int) Mathf.Round(transform.position.y));
+        var offset = new Vector2();
+
+        if (tag == "Player" || tag == "Enemy" || tag == "player" || tag == "enemy")
+        {
+            offset = new Vector2(0.5f, 0.5f);
+        }
+
+        var gridPos = new Vector2Int((int) Mathf.Round(transform.position.x + offset.x), (int) Mathf.Round(transform.position.y + offset.y));
+        gridPos = Service.Grid.FindNearestValidTile(gridPos);
+
+        return gridPos;
     }
 
     public Vector2 GetWorldPosition()
     {
-        return new Vector2(transform.position.x, transform.position.y);
+        var offset = new Vector2();
+
+        if (tag == "Player" || tag == "Enemy" || tag == "player" || tag == "enemy")
+        {
+            offset = new Vector2(0.5f, 0.5f);
+        }
+
+        return new Vector2(transform.position.x + offset.x, transform.position.y + offset.y);
     }
 
     /// <summary>
@@ -132,25 +149,25 @@ public class GridActor : MonoBehaviour
             return false;
         }
 
+        var targetPosition = path.GetNextWorldPosition();
+        
         // Have completed the path
         if (Vector2.Distance(GetWorldPosition(), path.GetEndPosition()) < PATH_POINT_THRESHOLD)
         {
             return true;
         }
 
-        var nextPos = path.GetNextWorldPosition();
-
-        if (nextPos == GridManager.INVALID_TILE)
+        if (targetPosition == GridManager.INVALID_TILE)
         {
             return true;
         }
 
-        if (Vector2.Distance(GetWorldPosition(), nextPos) < PATH_POINT_THRESHOLD)
+        if (Vector2.Distance(GetWorldPosition(), targetPosition) < PATH_POINT_THRESHOLD)
         {
             path.IncrementPoint();
-            nextPos = path.GetNextWorldPosition();
+            targetPosition = path.GetNextWorldPosition();
 
-            if (nextPos == GridManager.INVALID_TILE)
+            if (targetPosition == GridManager.INVALID_TILE)
             {
                 return true;
             }
@@ -173,11 +190,11 @@ public class GridActor : MonoBehaviour
 
         if (!UseNonLinearMovement)
         {
-            transform.position = Vector3.Lerp(transform.position, nextPos, GameConfig.GetDeltaTime() * MoveSpeed);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, GameConfig.GetDeltaTime() * MoveSpeed);
         }
         else
         {
-            var heading = nextPos - GetWorldPosition();
+            var heading = targetPosition - GetWorldPosition();
             var dist = heading.magnitude;
             var dir = heading / dist;
 

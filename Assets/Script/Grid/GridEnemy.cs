@@ -26,13 +26,13 @@ public class GridEnemy : GridActor
 
     private const int MaximumNumberOfChasers = 3;
 
-    private const float TimeBetweenLosCaches = 1f;
-    private const float TimeBetweenBreakToChaseChecks = 0.25f;
+    private const float TimeBetweenLosCaches = 0.1f;
+    private const float TimeBetweenBreakToChaseChecks = 0.1f;
     private const float TooManyChasersCooldownCheck = -5.0f;
 
     public enum EnemyBehaviourStyle
     {
-        Normal,
+        Normal = 0,
         Passive,
         Aggressive
     }
@@ -62,6 +62,8 @@ public class GridEnemy : GridActor
         Update,
         Exit
     }
+
+    public bool RandomiseBehaviour;
 
     private Path currentPath;
     private Vector2Int targetPosition;
@@ -96,6 +98,11 @@ public class GridEnemy : GridActor
     public override void Start() 
     {
         base.Start();
+
+        if (RandomiseBehaviour)
+        {
+            BehaviourStyle = (EnemyBehaviourStyle)Random.Range(0, 3);
+        }
     }
 
     #region States
@@ -231,7 +238,16 @@ public class GridEnemy : GridActor
 
             if (Service.Player)
             {
-                hasLosToPlayer = Service.Grid.HasGridLos(GetGridPosition(), Service.Player.GetGridPosition());
+                RaycastHit2D res;
+
+                Vector2 fromPos = GetWorldPosition();
+                Vector2 targetPos = Service.Player.GetWorldPosition();
+
+                var hitTest = Physics2D.Linecast(fromPos, targetPos, LayerMask.GetMask("Default"));
+                hasLosToPlayer = hitTest.collider == null;
+
+                // Old way
+               // hasLosToPlayer = Service.Grid.HasGridLos(GetGridPosition(), Service.Player.GetGridPosition());
             }
         }
     }
@@ -573,9 +589,19 @@ public class GridEnemy : GridActor
         {
             return;
         }
+#if DEBUG
+        Handles.Label(transform.position, $"{fsmState}:{fsmSubState}");
+#endif
 
-       // Handles.Label(transform.position, $"{fsmState}:{fsmSubState}");
+        Vector2 fromPos = GetWorldPosition();
+        Vector2 targetPos = Service.Player.GetWorldPosition();
+        Vector2 direction = targetPos - fromPos;
 
+        Gizmos.color = Physics2D.Linecast(fromPos, targetPos, LayerMask.GetMask("Default")).collider != null ? Color.red : Color.green;
+        Gizmos.DrawLine(fromPos, targetPos);
+
+
+        Gizmos.color = Color.magenta;
         if (currentPath?.IsValid ?? false)
         {
             Vector2 lastPoint = Vector2.negativeInfinity;

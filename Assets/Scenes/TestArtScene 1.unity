@@ -1239,7 +1239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.88235295, g: 0.9411765, b: 0.9098039, a: 1}
+  m_Color: {r: 0.65882355, g: 0.7529412, b: 0.6901961, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2245,12 +2245,12 @@ MonoBehaviour:
     - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
     GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
       type: 3}
-  ScorePerLevel: 100
   CurrentGridLevel: {fileID: 0}
   DebugPassCurrentLevel: 0
   DebugIgnoreEnemySpawning: 0
   CurrentState: 0
   CurrentLevel: 0
+  CurrentPellets: 0
   CurrentScore: 0
   TotalScore: 0
   ObjectsToDestroyOnLevelEnd: []
@@ -3110,6 +3110,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427850282415673919, guid: 05d62acb9d304aa41a39561099d51bc0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427850282415674050, guid: 05d62acb9d304aa41a39561099d51bc0,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427850282415674050, guid: 05d62acb9d304aa41a39561099d51bc0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05d62acb9d304aa41a39561099d51bc0, type: 3}
