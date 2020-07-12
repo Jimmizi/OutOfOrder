@@ -13,9 +13,17 @@ public class FlowManager : MonoBehaviour
     public CanvasGroup ProgressedLevelCanvas;
     public CanvasGroup ScoreScreenCanvas;
 
+    public Text ScoreCogText;
+    public Text ScoreCogShadowText;
+
     public Text PrePlayCountdownText;
+    public Text PrePlayCountdownText_Shadow;
+
     public Text ProgressedScoreText;
     public Text ProgressedLevelText;
+
+    public Text GameOverScoreText;
+    public Text GameOverLevelText;
 
     [Serializable]
     public struct LevelTuning
@@ -236,6 +244,13 @@ public class FlowManager : MonoBehaviour
     public void AddScore()
     {
         CurrentScore++;
+        UpdateScoreText();
+    }
+
+    private void UpdateScoreText()
+    {
+        ScoreCogText.text = $"Cogs: {CurrentScore}";
+        ScoreCogShadowText.text = $"Cogs: {CurrentScore}";
     }
 
     public bool HasEnoughScoreToProgress()
@@ -258,6 +273,9 @@ public class FlowManager : MonoBehaviour
             CurrentState = GameState.GameOver;
             ResetCanvasAlphas();
             ScoreScreenCanvas.alpha = 1f;
+
+            GameOverLevelText.text = $"Floor: {CurrentLevel}";
+            GameOverScoreText.text = $"Score: {TotalScore}";
         }
     }
 
@@ -294,6 +312,7 @@ public class FlowManager : MonoBehaviour
 
         prePlayTimer = 3f;
         PrePlayCountdownText.text = "3";
+        PrePlayCountdownText_Shadow.text = "3";
         prePlayerSpawnTimer = 0f;
 
         if (CurrentGridLevel)
@@ -308,9 +327,16 @@ public class FlowManager : MonoBehaviour
         }
     }
 
+    bool KeyPressedToProgressFlow()
+    {
+        return
+            Input.GetKeyDown(KeyCode.Space) ||
+            Input.GetKeyDown(KeyCode.Return);
+    }
+
     void ProcessTitle()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (KeyPressedToProgressFlow())
         {
             TransitionToPrePlay(true);
         }
@@ -331,14 +357,17 @@ public class FlowManager : MonoBehaviour
         if (prePlayTimer <= 2f && prePlayTimer > 1f)
         {
             PrePlayCountdownText.text = "2";
+            PrePlayCountdownText_Shadow.text = "2";
         }
         else if (prePlayTimer <= 1f && prePlayTimer > 0f)
         {
             PrePlayCountdownText.text = "1";
+            PrePlayCountdownText_Shadow.text = "1";
         }
         else if(prePlayTimer <= 0f && prePlayTimer > -0.4f)
         {
             PrePlayCountdownText.text = "GO";
+            PrePlayCountdownText_Shadow.text = "GO";
         }
         else if(prePlayTimer <= -0.4f)
         {
@@ -468,7 +497,7 @@ public class FlowManager : MonoBehaviour
 
     void ProcessGameOver()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (KeyPressedToProgressFlow())
         {
             DestroyAdditionalGameObjects();
             TransitionToPrePlay(true);
@@ -484,8 +513,9 @@ public class FlowManager : MonoBehaviour
         TotalScore += ScorePerLevel;
 
         CurrentScore = 0;
+        UpdateScoreText();
 
-        ProgressedLevelText.text = $"Level: {CurrentLevel}";
+        ProgressedLevelText.text = $"Floor: {CurrentLevel}";
         ProgressedScoreText.text = $"Score: {TotalScore}";
 
         CurrentState = GameState.ProgressLevel;
@@ -493,7 +523,7 @@ public class FlowManager : MonoBehaviour
 
     void ProcessProgressionScreen()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (KeyPressedToProgressFlow())
         {
             DestroyAdditionalGameObjects();
             TransitionToPrePlay();

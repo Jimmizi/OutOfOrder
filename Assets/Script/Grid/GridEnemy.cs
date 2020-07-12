@@ -457,6 +457,7 @@ public class GridEnemy : GridActor
 
     #endregion
 
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         if (!Application.isPlaying)
@@ -464,7 +465,7 @@ public class GridEnemy : GridActor
             return;
         }
 
-        Handles.Label(transform.position, $"{fsmState}:{fsmSubState}");
+       // Handles.Label(transform.position, $"{fsmState}:{fsmSubState}");
 
         if (currentPath?.IsValid ?? false)
         {
@@ -484,4 +485,5 @@ public class GridEnemy : GridActor
             }
         }
     }
+#endif
 }

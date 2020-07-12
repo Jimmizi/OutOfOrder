@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Xml;
-using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 using UnityEngine.Tilemaps;
-using UnityEngine.XR;
 using Random = UnityEngine.Random;
 
 public class GridManager : MonoBehaviour
@@ -689,7 +682,7 @@ public class GridManager : MonoBehaviour
     }
 
     #endregion
-
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         if (!Application.isPlaying)
@@ -697,12 +690,10 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-#if UNITY_EDITOR
         if (!DrawDebug)
         {
             return;
         }
-#endif
         foreach(var door in doorTileList)
         {
             if (door.Value)
@@ -741,4 +732,5 @@ public class GridManager : MonoBehaviour
             }
         }
     }
+#endif
 }

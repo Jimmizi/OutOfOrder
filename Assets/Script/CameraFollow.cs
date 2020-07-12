@@ -83,7 +83,7 @@ public class CameraFollow : MonoBehaviour
             slowDownTimer = 0f;
         }
     }
-
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         Collider2D col = GetComponent<Collider2D>();
@@ -97,4 +97,5 @@ public class CameraFollow : MonoBehaviour
         pos.z = 0;
         Gizmos.DrawCube(pos, new Vector3(col.bounds.size.x, col.bounds.size.y, 1f));
     }
+#endif
 }
