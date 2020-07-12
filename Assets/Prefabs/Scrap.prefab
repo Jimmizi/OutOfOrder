@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 5115121149852237377}
   - component: {fileID: 5115121149852237378}
   - component: {fileID: -1378842906073645402}
+  - component: {fileID: -1653906754464701636}
   m_Layer: 0
-  m_Name: Debug_Scrap
+  m_Name: Scrap
   m_TagString: point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 23de65a020286d24fbe4b8f354e4dc7c, type: 3}
+  m_Sprite: {fileID: -8824930518686111712, guid: e377584ba2c73514590d9d3b1542c7e4,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -135,3 +137,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseNonLinearMovement: 1
   MoveSpeed: 0.5
+--- !u!114 &-1653906754464701636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5115121149852237379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46270890c5923a547946221ecab0e514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 10
+  frames:
+  - {fileID: -8824930518686111712, guid: e377584ba2c73514590d9d3b1542c7e4, type: 3}
+  - {fileID: -5064382380040045643, guid: e377584ba2c73514590d9d3b1542c7e4, type: 3}
