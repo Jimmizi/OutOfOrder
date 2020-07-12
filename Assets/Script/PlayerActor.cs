@@ -57,6 +57,7 @@ public class PlayerActor : GridActor
     void Start()
     {
         Service.Flow.ObjectsToDestroyOnLevelEnd.Add(this.gameObject);
+        SetGlitchAmount(0f);
     }
 
     bool IsDirectionFreeToMoveIn(Vector2 dir)
@@ -132,6 +133,8 @@ public class PlayerActor : GridActor
             return;
         }
 
+        ProcessGlitchEffectOnMe();
+
         if (IsUpPressed())
         {
             if(IsDirectionFreeToMoveIn(Vector2.up))
@@ -189,6 +192,25 @@ public class PlayerActor : GridActor
 
     }
 
+    void ProcessGlitchEffectOnMe()
+    {
+        if(GridActor.GetDistanceToClosestEnemy(GetWorldPosition(), out float dist, out float maxDist, true))
+        {
+            var glitchMod = dist / maxDist;
+            glitchMod = Mathf.Clamp(1f - glitchMod, 0f, 0.5f);
+
+            SetGlitchAmount(glitchMod);
+        }
+        else
+        {
+            SetGlitchAmount(0f);
+        }
+    }
+
+    /// <summary>
+    /// Effective between 0 and 0.6. 0.6 being very severe
+    /// </summary>
+    /// <param name="amount"></param>
     void SetGlitchAmount(float amount)
     {
         if(glitch)

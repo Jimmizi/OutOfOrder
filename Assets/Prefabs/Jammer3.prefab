@@ -58,6 +58,11 @@ PrefabInstance:
       propertyPath: MoveSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 297827500821739265, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: PowerAffectDistance
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 297827500821739276, guid: 0cdfbda78f41e7144abfb007c3189092,
         type: 3}
       propertyPath: m_Name

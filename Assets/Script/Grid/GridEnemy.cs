@@ -499,7 +499,7 @@ public class GridEnemy : GridActor
                     }
                     else
                     {
-                        chasingOutOfSightTimer += GameConfig.GetDeltaTime();
+                        chasingOutOfSightTimer -= GameConfig.GetDeltaTime();
                         if (chasingOutOfSightTimer > 0f)
                         {
                             targetPosition = Service.Player.GetGridPosition();
@@ -521,12 +521,6 @@ public class GridEnemy : GridActor
                         currentPath.UpdateProgression(GetGridPosition());
                     }
 
-                    // Reach the end of the path, stop chasing (likely we have lost the player)
-                    if (currentPath == null || TaskMoveAlongPath(ref currentPath))
-                    {
-                        shouldStopChasing = true;
-                    }
-
                     switch (BehaviourStyle)
                     {
                         case EnemyBehaviourStyle.Normal:
@@ -540,6 +534,12 @@ public class GridEnemy : GridActor
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
+                    }
+
+                    // Reach the end of the path, stop chasing (likely we have lost the player)
+                    if (currentPath == null || TaskMoveAlongPath(ref currentPath))
+                    {
+                        shouldStopChasing = true;
                     }
                 }
                 else

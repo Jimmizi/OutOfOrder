@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GridActor : MonoBehaviour
 {
@@ -54,6 +56,43 @@ public class GridActor : MonoBehaviour
                 enemy.ImmediatelyLosePlayer();
             }
         }
+    }
+
+    public static bool GetDistanceToClosestEnemy(Vector2 point, out float nearestDist, out float powerAffectDist, bool onlyGlitchEnemies = false)
+    {
+        nearestDist = 999999999f;
+        powerAffectDist = 10f;
+
+        foreach (var actor in ActorList)
+        {
+            if (actor is GridEnemy enemy)
+            {
+                var dist = Vector2.Distance(point, enemy.GetWorldPosition());
+
+                if (onlyGlitchEnemies)
+                {
+                    if (enemy.PowerStyle != GridEnemy.EnemyPower.GlitchScreen)
+                    {
+                        continue;
+                    }
+
+                    powerAffectDist = enemy.PowerAffectDistance;
+
+                    if (dist >= enemy.PowerAffectDistance)
+                    {
+                        continue;
+                    }
+                }
+
+                if (dist < nearestDist)
+                {
+                    nearestDist = dist;
+                }
+
+            }
+        }
+
+        return Math.Abs(nearestDist - 999999999f) > 1f;
     }
 
     public static int GetNumberOfEnemies()

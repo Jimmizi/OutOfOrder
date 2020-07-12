@@ -25,5 +25,5 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Amount: 0
-    - _Seed: 0.6856155
+    - _Seed: 0.1385733
     m_Colors: []

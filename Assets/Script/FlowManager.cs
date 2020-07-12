@@ -183,7 +183,7 @@ public class FlowManager : MonoBehaviour
             cogTextTimesToFlash = 9;
             enoughCogsCollectedTimer = 0f;
 
-            ScoreCogText.color = new Color(168f / 255f, 192f / 255f, 176f / 255f, 1f);
+            ScoreCogText.color = new Color(225f / 255f, 240f / 255f, 232f / 255f, 1f);
         }
     }
 
@@ -373,7 +373,9 @@ public class FlowManager : MonoBehaviour
         PrePlayCountdownText_Shadow.text = "3";
         prePlayerSpawnTimer = 0f;
 
-        ScoreCogText.color = new Color(225f / 255f, 240f / 255f, 232f / 255f, 1f);
+        hasDoneEnoughCogsFlash = false;
+
+        ScoreCogText.color = new Color(158f / 255f, 192f / 255f, 176f / 255f, 1f);
 
         if (CurrentGridLevel)
         {
