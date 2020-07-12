@@ -56,7 +56,7 @@ PrefabInstance:
     - target: {fileID: 297827500821739265, guid: 0cdfbda78f41e7144abfb007c3189092,
         type: 3}
       propertyPath: PowerAffectDistance
-      value: 5
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 297827500821739265, guid: 0cdfbda78f41e7144abfb007c3189092,
         type: 3}

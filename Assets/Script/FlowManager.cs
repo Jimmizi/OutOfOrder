@@ -31,9 +31,16 @@ public class FlowManager : MonoBehaviour
     public Text GameOverScoreText;
     public Text GameOverLevelText;
 
+    public Text LevelNameText;
+    public Text LevelNameText_Shadow;
+    private float timeBeforeLevelTextDisappears;
+
     [Serializable]
     public struct LevelTuning
     {
+        public string LevelName;
+        public string DebugDescription;
+
         public int SpawnCount;
         public int PelletsNeed;
         public int PelletSpawnCount;
@@ -59,16 +66,27 @@ public class FlowManager : MonoBehaviour
         GameOver
     }
 
+    [HideInInspector]
     public bool DebugPassCurrentLevel = false;
 
 #if UNITY_EDITOR
+    [HideInInspector]
     public bool DebugIgnoreEnemySpawning = false;
 #endif
 
+    [HideInInspector]
     public GameState CurrentState;
+
+    [HideInInspector]
     public int CurrentLevel;
+
+    [HideInInspector]
     public int CurrentPellets;
+
+    [HideInInspector]
     public uint CurrentScore;
+
+    [HideInInspector]
     public uint TotalScore;
 
     private float prePlayTimer = 3f;
@@ -232,6 +250,22 @@ public class FlowManager : MonoBehaviour
         return LevelTunings[CurrentLevel].PelletsNeed;
     }
 
+
+    public string GetNameForCurrentLevel()
+    {
+        if (LevelTunings.Count == 0)
+        {
+            return "";
+        }
+
+        if (CurrentLevel >= LevelTunings.Count)
+        {
+            return "???";
+        }
+
+        return LevelTunings[CurrentLevel].LevelName;
+    }
+
     public int GetPelletCountForCurrentLevel()
     {
         if (LevelTunings.Count == 0)
@@ -372,6 +406,30 @@ public class FlowManager : MonoBehaviour
         PrePlayCountdownText.text = "3";
         PrePlayCountdownText_Shadow.text = "3";
         prePlayerSpawnTimer = 0f;
+
+        timeBeforeLevelTextDisappears = 0f;
+        LevelNameText.enabled = false;
+        LevelNameText_Shadow.enabled = false;
+
+        var thisLevelName = GetNameForCurrentLevel();
+        if (thisLevelName != "")
+        {
+            LevelNameText.enabled = true;
+            LevelNameText_Shadow.enabled = true;
+
+            timeBeforeLevelTextDisappears = 5f;
+            LevelNameText.text = thisLevelName;
+            LevelNameText_Shadow.text = thisLevelName;
+
+
+            var col = LevelNameText.color;
+            col.a = 1f;
+            LevelNameText.color = col;
+
+            var colS = LevelNameText_Shadow.color;
+            colS.a = 1f;
+            LevelNameText_Shadow.color = colS;
+        }
 
         hasDoneEnoughCogsFlash = false;
 
@@ -548,6 +606,27 @@ public class FlowManager : MonoBehaviour
 
     void ProcessPlaying()
     {
+        if (timeBeforeLevelTextDisappears > 0f)
+        {
+            timeBeforeLevelTextDisappears -= GameConfig.GetDeltaTime();
+
+
+            var col = LevelNameText.color;
+            col.a = Mathf.Clamp(timeBeforeLevelTextDisappears, 0.0f, 1.0f);
+            LevelNameText.color = col;
+
+            var colS = LevelNameText_Shadow.color;
+            colS.a = Mathf.Clamp(timeBeforeLevelTextDisappears, 0.0f, 1.0f);
+            LevelNameText_Shadow.color = colS;
+
+            if (timeBeforeLevelTextDisappears <= 0f)
+            {
+                LevelNameText.enabled = false;
+                LevelNameText_Shadow.enabled = false;
+            }
+
+        }
+
         ProcessCogsCollectedFlashing();
 
 #if UNITY_EDITOR
@@ -580,14 +659,17 @@ public class FlowManager : MonoBehaviour
         ResetCanvasAlphas();
         ProgressedLevelCanvas.alpha = 1f;
 
+        CurrentLevel++;
+
         TotalScore += CurrentScore;
         TotalScore += Score_LevelCompleted;
 
         CurrentPellets = 0;
         UpdateScoreText();
 
-        ProgressedLevelText.text = $"Floor: {CurrentLevel+1}";
-        ProgressedScoreText.text = $"Score: {TotalScore}";
+        // Text is disabled on the canvas
+        //ProgressedLevelText.text = $"Floor: {CurrentLevel+1}";
+        //ProgressedScoreText.text = $"Score: {TotalScore}";
 
         CurrentState = GameState.ProgressLevel;
     }

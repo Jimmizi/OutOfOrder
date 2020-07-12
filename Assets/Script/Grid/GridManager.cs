@@ -330,7 +330,7 @@ public class GridManager : MonoBehaviour
         {
             var dist = Vector2.Distance(door.Key, nearPos);
 
-            if (dist < bestDist && dist > TILE_SIZE * 0.45f)
+            if (dist < bestDist && dist > TILE_SIZE * 0.35f)
             {
                 bestDist = dist;
                 nearestDoor = door.Key;
@@ -338,7 +338,7 @@ public class GridManager : MonoBehaviour
         }
 
         // Times 1.5f for a little distance buffer
-        if (bestDist < TILE_SIZE * 1.5f)
+        if (bestDist < TILE_SIZE * 1.85f)
         {
             // Toggle the state of the nearest door
             doorTileList[nearestDoor] = !doorTileList[nearestDoor];
