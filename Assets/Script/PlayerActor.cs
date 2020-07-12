@@ -18,6 +18,20 @@ public class PlayerActor : GridActor
         }
     }
 
+    GlitchEffect _glitch;
+    GlitchEffect glitch
+    {
+        get
+        {
+            if(!_glitch)
+            {
+                _glitch = Camera.main?.GetComponent<GlitchEffect>();
+            }
+
+            return _glitch;
+        }
+    }
+
     public bool AreControlsConfused = false;
     public bool IsBeingSlowed = false;
 
@@ -173,6 +187,14 @@ public class PlayerActor : GridActor
             InteractNearbyObject();
         }
 
+    }
+
+    void SetGlitchAmount(float amount)
+    {
+        if(glitch)
+        {
+            glitch.glitchAmount = amount;
+        }
     }
 
     void OnDrawGizmos()

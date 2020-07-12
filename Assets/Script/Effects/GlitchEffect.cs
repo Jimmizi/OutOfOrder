@@ -19,6 +19,8 @@ public class GlitchEffect : MonoBehaviour
 
     public Material material;
 
+    public float glitchAmount { get {return _amount;} set {_amount = value;} }
+
     // Postprocess the image
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
