@@ -250,6 +250,61 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 81251698255895690, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 81251698435144198, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 81251698479771644, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_Text
+      value: Out of order
+      objectReference: {fileID: 0}
+    - target: {fileID: 81251698479771645, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 164
+      objectReference: {fileID: 0}
+    - target: {fileID: 81251698556537429, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_Text
+      value: out of order
+      objectReference: {fileID: 0}
+    - target: {fileID: 81251698556537430, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 81251698810893708, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 81251698974267360, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 81251699231354879, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 870271989566198465, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607026998677231758, guid: aafb4e58ac582e74aa90f2fe8a94658c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aafb4e58ac582e74aa90f2fe8a94658c, type: 3}
 --- !u!114 &1498316434 stripped
@@ -479,12 +534,12 @@ PrefabInstance:
     - target: {fileID: 3930774045499691460, guid: 05d62acb9d304aa41a39561099d51bc0,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3930774045499691460, guid: 05d62acb9d304aa41a39561099d51bc0,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3930774045499691460, guid: 05d62acb9d304aa41a39561099d51bc0,
         type: 3}
@@ -495,6 +550,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229009797931263661, guid: 05d62acb9d304aa41a39561099d51bc0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427850282415673917, guid: 05d62acb9d304aa41a39561099d51bc0,
+        type: 3}
+      propertyPath: m_AssetsPPU
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427850282415673917, guid: 05d62acb9d304aa41a39561099d51bc0,
+        type: 3}
+      propertyPath: m_CropFrameX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427850282415673917, guid: 05d62acb9d304aa41a39561099d51bc0,
+        type: 3}
+      propertyPath: m_CropFrameY
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427850282415673917, guid: 05d62acb9d304aa41a39561099d51bc0,
+        type: 3}
+      propertyPath: m_StretchFill
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5427850282415673919, guid: 05d62acb9d304aa41a39561099d51bc0,
         type: 3}
@@ -668,6 +748,21 @@ PrefabInstance:
       propertyPath: LevelNameText_Shadow
       value: 
       objectReference: {fileID: 1915827595}
+    - target: {fileID: 7530621767482014076, guid: c105cbc221945734681d4c61e6786006,
+        type: 3}
+      propertyPath: LevelTunings.Array.data[4].SpawnCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7530621767482014076, guid: c105cbc221945734681d4c61e6786006,
+        type: 3}
+      propertyPath: LevelTunings.Array.data[4].PelletsNeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7530621767482014076, guid: c105cbc221945734681d4c61e6786006,
+        type: 3}
+      propertyPath: LevelTunings.Array.data[4].PelletSpawnCount
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7530621767482014077, guid: c105cbc221945734681d4c61e6786006,
         type: 3}
       propertyPath: m_Name
