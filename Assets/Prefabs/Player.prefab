@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 5638259562752074330, guid: 6514c4bfd9aa0964bb7f5e11b1666e71,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -99,6 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseNonLinearMovement: 1
   MoveSpeed: 5
+  AreControlsConfused: 0
+  IsBeingSlowed: 0
   leftSprite: {fileID: 17426746270384133, guid: 6514c4bfd9aa0964bb7f5e11b1666e71,
     type: 3}
   rightSprite: {fileID: -3378959473338303302, guid: 6514c4bfd9aa0964bb7f5e11b1666e71,
@@ -107,6 +109,7 @@ MonoBehaviour:
     type: 3}
   downSprite: {fileID: 5638259562752074330, guid: 6514c4bfd9aa0964bb7f5e11b1666e71,
     type: 3}
+  SlowSpeed: 2.5
 --- !u!50 &3001820882785286742
 Rigidbody2D:
   serializedVersion: 4

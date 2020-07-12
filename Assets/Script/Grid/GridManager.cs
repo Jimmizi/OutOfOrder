@@ -214,7 +214,7 @@ public class GridManager : MonoBehaviour
                     tileHardCollision[x][y] = false;
                     validTileList.Add(new Vector2Int(x + 1, y + 1));
 
-                    var playerGo = (GameObject) Instantiate(PlayerPrefab, new Vector3(gridPos.x, gridPos.y, 0), Quaternion.identity);
+                    var playerGo = (GameObject) Instantiate(PlayerPrefab, new Vector3(gridPos.x - 0.5f, gridPos.y - 0.5f, 0), Quaternion.identity);
                 }
                 else if (IsTileNameLevelGoalSpawn(t.name))
                 {
@@ -298,6 +298,11 @@ public class GridManager : MonoBehaviour
 
     public bool HasGridLos(Vector2Int origin, Vector2Int destination)
     {
+        if (origin == INVALID_TILE || destination == INVALID_TILE)
+        {
+            return false;
+        }
+
         PathFindOptions opt = new PathFindOptions
         {
             IgnoreCollision = true

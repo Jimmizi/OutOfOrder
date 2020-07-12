@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 297827500821739265, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: PowerStyle
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 297827500821739265, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: MoveSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 297827500821739276, guid: 0cdfbda78f41e7144abfb007c3189092,
         type: 3}
       propertyPath: m_Name
@@ -38,6 +48,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1280201778250208913, guid: f446c1495b8be5a4a8c32fdd26ca7b6f,
         type: 3}
+    - target: {fileID: 297827500821739279, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8518685005917946182, guid: 0cdfbda78f41e7144abfb007c3189092,
         type: 3}
       propertyPath: IdleFrames.Array.data[0]

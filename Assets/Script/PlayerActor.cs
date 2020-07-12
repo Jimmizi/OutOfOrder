@@ -18,10 +18,15 @@ public class PlayerActor : GridActor
         }
     }
 
+    public bool AreControlsConfused = false;
+    public bool IsBeingSlowed = false;
+
     public Sprite leftSprite;
     public Sprite rightSprite;
     public Sprite upSprite;
     public Sprite downSprite;
+
+    public float SlowSpeed = 1f;
 
     void Awake()
     {
@@ -56,6 +61,55 @@ public class PlayerActor : GridActor
         }
     }
 
+    bool IsLeftPressed()
+    {
+        if (AreControlsConfused)
+        {
+            // Now press up
+            return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+        }
+        
+        return Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
+    }
+
+    bool IsRightPressed()
+    {
+        if (AreControlsConfused)
+        {
+            // Now need to press down
+            return Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+        }
+
+        return Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
+    }
+
+    bool IsUpPressed()
+    {
+        if (AreControlsConfused)
+        {
+            // Now press left
+            return Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
+        }
+
+        return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+    }
+
+    bool IsDownPressed()
+    {
+        if (AreControlsConfused)
+        {
+            // Now press up
+            return Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
+        }
+
+        return Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+    }
+
+    float GetMoveSpeed()
+    {
+        return IsBeingSlowed ? SlowSpeed : MoveSpeed;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -64,11 +118,11 @@ public class PlayerActor : GridActor
             return;
         }
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if (IsUpPressed())
         {
             if(IsDirectionFreeToMoveIn(Vector2.up))
             {
-                transform.position += new Vector3(0, MoveSpeed * GameConfig.GetDeltaTime());
+                transform.position += new Vector3(0, GetMoveSpeed() * GameConfig.GetDeltaTime());
             }
 
             if (renderer)
@@ -76,11 +130,11 @@ public class PlayerActor : GridActor
                 renderer.sprite = upSprite;
             }
         }
-        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        else if (IsDownPressed())
         {
             if (IsDirectionFreeToMoveIn(Vector2.down))
             {
-                transform.position += new Vector3(0, -MoveSpeed * GameConfig.GetDeltaTime());
+                transform.position += new Vector3(0, -GetMoveSpeed() * GameConfig.GetDeltaTime());
             }
 
             if (renderer)
@@ -89,11 +143,11 @@ public class PlayerActor : GridActor
             }
         }
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (IsLeftPressed())
         {
             if (IsDirectionFreeToMoveIn(Vector2.left))
             {
-                transform.position += new Vector3(-MoveSpeed * GameConfig.GetDeltaTime(), 0);
+                transform.position += new Vector3(-GetMoveSpeed() * GameConfig.GetDeltaTime(), 0);
             }
 
             if(renderer)
@@ -101,11 +155,11 @@ public class PlayerActor : GridActor
                 renderer.sprite = leftSprite;
             }
         }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        else if (IsRightPressed())
         {
             if (IsDirectionFreeToMoveIn(Vector2.right))
             {
-                transform.position += new Vector3(MoveSpeed * GameConfig.GetDeltaTime(), 0);
+                transform.position += new Vector3(GetMoveSpeed() * GameConfig.GetDeltaTime(), 0);
             }
 
             if (renderer)

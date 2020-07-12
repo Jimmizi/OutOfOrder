@@ -10,6 +10,41 @@ public class GridActor : MonoBehaviour
 
     public bool UseNonLinearMovement = true;
 
+    protected bool AreOtherEnemiesAffectingPlayerWithMyPower()
+    {
+        GridEnemy me = this as GridEnemy;
+
+        if (me == null)
+        {
+            return false;
+        }
+
+        foreach (var actor in ActorList)
+        {
+            if (actor is GridEnemy enemy)
+            {
+                if (enemy == this)
+                {
+                    continue;
+                }
+
+                if (enemy.PowerStyle != me.PowerStyle)
+                {
+                    continue;
+                }
+
+                if (!enemy.IsAffectingPlayerWithPower)
+                {
+                    continue;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static void TellEnemiesToLosePlayer()
     {
         foreach (var actor in ActorList)

@@ -37,6 +37,15 @@ public class GridEnemy : GridActor
         Aggressive
     }
 
+    public enum EnemyPower
+    {
+        None,
+
+        ConfusePlayer,
+        GlitchScreen,
+        SlowPlayer
+    }
+
     public enum EnemyFsmState
     {
         State_Wander, // Wandering around the map aimlessly
@@ -62,12 +71,20 @@ public class GridEnemy : GridActor
     private float losCacheInterval;
     private float breakToChaseStateTimer;
     private float chasingOutOfSightTimer;
+    private float powerCheckTimer;
 
     private bool hasLosToPlayer;
 
     private EnemyFsmState fsmState;
     private EnemyFsmState fsmPendingState = EnemyFsmState.State_Invalid;
     private EnemyFsmSubState fsmSubState;
+
+    public EnemyPower PowerStyle;
+    public float PowerAffectDistance = 3f;
+    public bool CanAffectWithoutLos = true;
+
+    [HideInInspector]
+    public bool IsAffectingPlayerWithPower;
 
     public EnemyBehaviourStyle BehaviourStyle;
 
@@ -98,6 +115,8 @@ public class GridEnemy : GridActor
         // Always cache the los to the player
         ProcessCacheLos();
 
+        ProcessEnemyPower();
+
         if (fsmState != EnemyFsmState.State_Chase)
         {
             // Every internal, try to break out of the current state into a chase
@@ -121,6 +140,85 @@ public class GridEnemy : GridActor
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    void SetAffectingPlayerWithPower()
+    {
+        if (!IsAffectingPlayerWithPower)
+        {
+            switch (PowerStyle)
+            {
+                case EnemyPower.ConfusePlayer:
+                    Service.Player.AreControlsConfused = true;
+                    break;
+                case EnemyPower.GlitchScreen:
+
+                    break;
+                case EnemyPower.SlowPlayer:
+                    Service.Player.IsBeingSlowed = true;
+
+                    break;
+            }
+        }
+
+        IsAffectingPlayerWithPower = true;
+    }
+
+    void SetNotAffectingPlayerWithPower()
+    {
+        if (IsAffectingPlayerWithPower && !AreOtherEnemiesAffectingPlayerWithMyPower())
+        {
+            switch (PowerStyle)
+            {
+                case EnemyPower.ConfusePlayer:
+                    Service.Player.AreControlsConfused = false;
+                    break;
+                case EnemyPower.GlitchScreen:
+                    
+                    break;
+                case EnemyPower.SlowPlayer:
+                    Service.Player.IsBeingSlowed = false;
+
+                    break;
+            }
+        }
+
+        IsAffectingPlayerWithPower = false;
+    }
+
+    void ProcessEnemyPower()
+    {
+        if (PowerStyle == EnemyPower.None)
+        {
+            return;
+        }
+
+        powerCheckTimer += GameConfig.GetDeltaTime();
+        if (powerCheckTimer < 0.5f)
+        {
+            return;
+        }
+
+        powerCheckTimer = 0f;
+
+        var dist = Vector3.Distance(GetWorldPosition(), Service.Player.GetWorldPosition());
+
+        if (dist >= PowerAffectDistance)
+        {
+            SetNotAffectingPlayerWithPower();
+            return;
+        }
+
+        if (!CanAffectWithoutLos)
+        {
+            if (!Service.Grid.HasGridLos(GetGridPosition(), Service.Player.GetGridPosition()))
+            {
+                SetNotAffectingPlayerWithPower();
+                return;
+            }
+        }
+
+        SetAffectingPlayerWithPower();
     }
 
     void ProcessCacheLos()
