@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 297827500821739276, guid: 0cdfbda78f41e7144abfb007c3189092,
         type: 3}
       propertyPath: m_Name
-      value: JammerBase (1)
+      value: Jammer3
       objectReference: {fileID: 0}
     - target: {fileID: 297827500821739278, guid: 0cdfbda78f41e7144abfb007c3189092,
         type: 3}
@@ -32,6 +32,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 297827500821739279, guid: 0cdfbda78f41e7144abfb007c3189092,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5314320536883621373, guid: 0b8addbc4a75cf443988b941d58b7a76,
+        type: 3}
     - target: {fileID: 8518685005917946182, guid: 0cdfbda78f41e7144abfb007c3189092,
         type: 3}
       propertyPath: IdleFrames.Array.data[0]
