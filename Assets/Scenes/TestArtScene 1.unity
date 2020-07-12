@@ -2814,10 +2814,17 @@ MonoBehaviour:
     GridPrefab: {fileID: 7663904076907319302, guid: 0bc2c9df1350f45468130d44095f9ba5,
       type: 3}
   - SpawnCount: 1
-    PelletsNeed: 3
-    PelletSpawnCount: 3
+    PelletsNeed: 5
+    PelletSpawnCount: 5
     EnemyPrefabs: []
     GridPrefab: {fileID: 7663904076907319302, guid: af94a285d5db8d642b99a79d833c5925,
+      type: 3}
+  - SpawnCount: 1
+    PelletsNeed: 3
+    PelletSpawnCount: 3
+    EnemyPrefabs:
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    GridPrefab: {fileID: 7663904076907319302, guid: 17d20f67cd9398a4f85a9115e4018d68,
       type: 3}
   CurrentGridLevel: {fileID: 0}
   DebugPassCurrentLevel: 0
