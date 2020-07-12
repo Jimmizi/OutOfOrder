@@ -480,6 +480,8 @@ public class FlowManager : MonoBehaviour
             LevelTwoTutorialObject.SetActive(true);
             activatedTutorialTwo = true;
         }
+
+
     }
 
     bool KeyPressedToProgressFlow()
