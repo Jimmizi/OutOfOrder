@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7530621767482014077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7530621767482014067}
+  - component: {fileID: 7530621767482014076}
+  m_Layer: 0
+  m_Name: FLOW_MANAGER
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7530621767482014067
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530621767482014077}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7530621767482014076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530621767482014077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b6ff3e44aa6a4a40a911bde0e50bae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TitleScreenCanvas: {fileID: 0}
+  PrePlayScreenCanvas: {fileID: 0}
+  PlayingScreenCanvas: {fileID: 0}
+  ProgressedLevelCanvas: {fileID: 0}
+  ScoreScreenCanvas: {fileID: 0}
+  ScoreCogText: {fileID: 0}
+  ScoreCogShadowText: {fileID: 0}
+  PrePlayCountdownText: {fileID: 0}
+  PrePlayCountdownText_Shadow: {fileID: 0}
+  ProgressedScoreText: {fileID: 0}
+  ProgressedLevelText: {fileID: 0}
+  GameOverScoreText: {fileID: 0}
+  GameOverLevelText: {fileID: 0}
+  ScorePelletPrefab: {fileID: 5115121149852237379, guid: ce45ae0bbe8e0554b9d39756fd31a074,
+    type: 3}
+  LevelTunings:
+  - SpawnCount: 1
+    PelletsNeed: 2
+    PelletSpawnCount: 5
+    EnemyPrefabs:
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  CurrentGridLevel: {fileID: 0}
+  DebugPassCurrentLevel: 0
+  DebugIgnoreEnemySpawning: 0
+  CurrentState: 0
+  CurrentLevel: 0
+  CurrentPellets: 0
+  CurrentScore: 0
+  TotalScore: 0
+  ObjectsToDestroyOnLevelEnd: []
