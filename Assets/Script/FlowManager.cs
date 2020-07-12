@@ -19,6 +19,9 @@ public class FlowManager : MonoBehaviour
     public CanvasGroup ProgressedLevelCanvas;
     public CanvasGroup ScoreScreenCanvas;
 
+    public GameObject LevelOneTutorialObject;
+    public GameObject LevelTwoTutorialObject;
+
     public Text ScoreCogText;
     public Text ScoreCogShadowText;
 
@@ -48,6 +51,8 @@ public class FlowManager : MonoBehaviour
 
         public GameObject GridPrefab;
     }
+
+    private bool activatedTutorialOne, activatedTutorialTwo;
 
     public GameObject ScorePelletPrefab;
 
@@ -198,7 +203,7 @@ public class FlowManager : MonoBehaviour
         {
             hasDoneEnoughCogsFlash = true;
 
-            cogTextTimesToFlash = 9;
+            cogTextTimesToFlash = 13;
             enoughCogsCollectedTimer = 0f;
 
             ScoreCogText.color = new Color(225f / 255f, 240f / 255f, 232f / 255f, 1f);
@@ -442,8 +447,39 @@ public class FlowManager : MonoBehaviour
 
         if (isGameInit)
         {
-            CurrentLevel = 0;
             TotalScore = 0;
+
+            // if we did not get to the third level (the first level with enemies) then start from the beginning
+            if (CurrentLevel < 2)
+            {
+                CurrentLevel = 0;
+            }
+            else
+            {
+                //Otherwise skip the tutorial levels if we 
+                CurrentLevel = 2;
+
+                //for (int i = 0; i < LevelTunings.Count || i < CurrentLevel; i++)
+                //{
+                //    TotalScore += Score_LevelCompleted;
+                //    TotalScore += (uint)(Score_CollectedPellet * LevelTunings[i].PelletsNeed);
+                //}
+
+                //Give baseline score to get to this point
+                TotalScore = Score_LevelCompleted * 2; // Two levels under our belt
+                TotalScore += Score_CollectedPellet * 5; // 5 cogs needed to progress to this point
+            }
+        }
+
+        if (CurrentLevel == 0 && !activatedTutorialOne)
+        {
+            LevelOneTutorialObject.SetActive(true);
+            activatedTutorialOne = true;
+        }
+        else if (CurrentLevel == 1 && !activatedTutorialTwo)
+        {
+            LevelTwoTutorialObject.SetActive(true);
+            activatedTutorialTwo = true;
         }
     }
 
@@ -669,7 +705,7 @@ public class FlowManager : MonoBehaviour
 
         // Text is disabled on the canvas
         //ProgressedLevelText.text = $"Floor: {CurrentLevel+1}";
-        //ProgressedScoreText.text = $"Score: {TotalScore}";
+        ProgressedScoreText.text = $"Score: {TotalScore}";
 
         CurrentState = GameState.ProgressLevel;
     }
@@ -680,7 +716,6 @@ public class FlowManager : MonoBehaviour
         {
             DestroyAdditionalGameObjects();
             TransitionToPrePlay();
-            CurrentLevel++;
         }
     }
 

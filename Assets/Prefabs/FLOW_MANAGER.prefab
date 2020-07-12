@@ -48,6 +48,8 @@ MonoBehaviour:
   PlayingScreenCanvas: {fileID: 0}
   ProgressedLevelCanvas: {fileID: 0}
   ScoreScreenCanvas: {fileID: 0}
+  LevelOneTutorialObject: {fileID: 0}
+  LevelTwoTutorialObject: {fileID: 0}
   ScoreCogText: {fileID: 0}
   ScoreCogShadowText: {fileID: 0}
   PrePlayCountdownText: {fileID: 0}
@@ -56,13 +58,189 @@ MonoBehaviour:
   ProgressedLevelText: {fileID: 0}
   GameOverScoreText: {fileID: 0}
   GameOverLevelText: {fileID: 0}
+  LevelNameText: {fileID: 0}
+  LevelNameText_Shadow: {fileID: 0}
   ScorePelletPrefab: {fileID: 5115121149852237379, guid: ce45ae0bbe8e0554b9d39756fd31a074,
     type: 3}
   LevelTunings:
-  - SpawnCount: 1
+  - LevelName: 
+    DebugDescription: 1. introduce cogs and elevator concept, no enemies
+    SpawnCount: 0
     PelletsNeed: 2
     PelletSpawnCount: 5
+    EnemyPrefabs: []
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 2. introduce doors and teleporters, no enemies
+    SpawnCount: 0
+    PelletsNeed: 3
+    PelletSpawnCount: 6
+    EnemyPrefabs: []
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 3. introduce enemy that slows you
+    SpawnCount: 1
+    PelletsNeed: 2
+    PelletSpawnCount: 4
     EnemyPrefabs:
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 3b. Slow enemy again, more spawns
+    SpawnCount: 3
+    PelletsNeed: 4
+    PelletSpawnCount: 7
+    EnemyPrefabs:
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 4. introduce glitch enemy
+    SpawnCount: 1
+    PelletsNeed: 4
+    PelletSpawnCount: 8
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 4b. Glitch enemy again, more spawns
+    SpawnCount: 3
+    PelletsNeed: 1
+    PelletSpawnCount: 2
+    EnemyPrefabs:
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 5. Introduce confuser enemy
+    SpawnCount: 1
+    PelletsNeed: 6
+    PelletSpawnCount: 10
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 5b. Confuser enemy again but more
+    SpawnCount: 3
+    PelletsNeed: 2
+    PelletSpawnCount: 7
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 6. Slower and glitcher enemies
+    SpawnCount: 3
+    PelletsNeed: 3
+    PelletSpawnCount: 7
+    EnemyPrefabs:
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 7. Slower and confuser enemies
+    SpawnCount: 3
+    PelletsNeed: 2
+    PelletSpawnCount: 6
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 8. glitcher and confuser enemies
+    SpawnCount: 4
+    PelletsNeed: 4
+    PelletSpawnCount: 9
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 9a. everything
+    SpawnCount: 2
+    PelletsNeed: 2
+    PelletSpawnCount: 6
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 9b. everything
+    SpawnCount: 4
+    PelletsNeed: 4
+    PelletSpawnCount: 5
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 9c. everything
+    SpawnCount: 5
+    PelletsNeed: 1
+    PelletSpawnCount: 4
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 9d. everything
+    SpawnCount: 6
+    PelletsNeed: 5
+    PelletSpawnCount: 10
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 9e. everything
+    SpawnCount: 4
+    PelletsNeed: 3
+    PelletSpawnCount: 8
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 9f. everything
+    SpawnCount: 5
+    PelletsNeed: 5
+    PelletSpawnCount: 6
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
+    - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
+    GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
+      type: 3}
+  - LevelName: 
+    DebugDescription: 9g. everything
+    SpawnCount: 4
+    PelletsNeed: 5
+    PelletSpawnCount: 8
+    EnemyPrefabs:
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
+    - {fileID: 8140225123665486856, guid: 857875c8fe057f8408f667873e547af8, type: 3}
     - {fileID: 8523365245726855216, guid: 10db8cdb933209a49b8d434125073967, type: 3}
     GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
       type: 3}
