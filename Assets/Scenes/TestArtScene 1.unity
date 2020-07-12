@@ -828,6 +828,7 @@ GameObject:
   - component: {fileID: 789699322}
   - component: {fileID: 789699321}
   - component: {fileID: 789699320}
+  - component: {fileID: 789699323}
   m_Layer: 5
   m_Name: Presstoplay
   m_TagString: Untagged
@@ -915,6 +916,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 789699318}
   m_CullTransparentMesh: 0
+--- !u!114 &789699323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789699318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3fe65c0a52a9b342a1aae38da21fa1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeToAppear: 0
+  TextToShow: []
 --- !u!1 &851876015
 GameObject:
   m_ObjectHideFlags: 0
@@ -2223,17 +2238,17 @@ MonoBehaviour:
   ScorePelletPrefab: {fileID: 5115121149852237379, guid: ce45ae0bbe8e0554b9d39756fd31a074,
     type: 3}
   LevelTunings:
-  - SpawnCount: 3
+  - SpawnCount: 1
     PelletsNeed: 2
     PelletSpawnCount: 5
     EnemyPrefabs:
-    - {fileID: 297827500821739276, guid: 0cdfbda78f41e7144abfb007c3189092, type: 3}
+    - {fileID: 8459840225503649150, guid: bfe02242f4142c14788417d340b6f9fb, type: 3}
     GridPrefab: {fileID: 5581310816929932385, guid: c9e7ed4f4d1b26b428ae7c7c2255ecf6,
       type: 3}
   ScorePerLevel: 100
   CurrentGridLevel: {fileID: 0}
   DebugPassCurrentLevel: 0
-  DebugIgnoreEnemySpawning: 1
+  DebugIgnoreEnemySpawning: 0
   CurrentState: 0
   CurrentLevel: 0
   CurrentScore: 0

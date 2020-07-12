@@ -38,6 +38,11 @@ public class ScorePellet : GridActor
     // Update is called once per frame
     public override void Update()
     {
+        if (!Service.Flow.IsGameRunning)
+        {
+            return;
+        }
+
         if (currentPath == null)
         {
             var currentPos = GetGridPosition();

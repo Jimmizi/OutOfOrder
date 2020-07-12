@@ -175,7 +175,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7610360451163615693, guid: 23768208dd24c594bbfe40cbdf455103,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -202,6 +202,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseNonLinearMovement: 1
   MoveSpeed: 2
+  PowerStyle: 0
+  PowerAffectDistance: 3
+  CanAffectWithoutLos: 1
+  IsAffectingPlayerWithPower: 0
   BehaviourStyle: 0
 --- !u!61 &297827500821739267
 BoxCollider2D:
