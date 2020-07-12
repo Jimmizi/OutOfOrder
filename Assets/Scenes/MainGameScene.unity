@@ -1017,42 +1017,6 @@ PrefabInstance:
       propertyPath: LevelNameText_Shadow
       value: 
       objectReference: {fileID: 1915827595}
-    - target: {fileID: 7530621767482014076, guid: c105cbc221945734681d4c61e6786006,
-        type: 3}
-      propertyPath: LevelTunings.Array.data[5].GridPrefab
-      value: 
-      objectReference: {fileID: 7663904076907319302, guid: b0e39f871dedf1544b316ecfdd4dd32e,
-        type: 3}
-    - target: {fileID: 7530621767482014076, guid: c105cbc221945734681d4c61e6786006,
-        type: 3}
-      propertyPath: LevelTunings.Array.data[6].GridPrefab
-      value: 
-      objectReference: {fileID: 7663904076907319302, guid: 8182accc1a8fc34459f05c2020fba66c,
-        type: 3}
-    - target: {fileID: 7530621767482014076, guid: c105cbc221945734681d4c61e6786006,
-        type: 3}
-      propertyPath: LevelTunings.Array.data[7].GridPrefab
-      value: 
-      objectReference: {fileID: 7663904076907319302, guid: a84aac741312a03489f0396f17cdb433,
-        type: 3}
-    - target: {fileID: 7530621767482014076, guid: c105cbc221945734681d4c61e6786006,
-        type: 3}
-      propertyPath: LevelTunings.Array.data[9].GridPrefab
-      value: 
-      objectReference: {fileID: 7663904076907319302, guid: 8182accc1a8fc34459f05c2020fba66c,
-        type: 3}
-    - target: {fileID: 7530621767482014076, guid: c105cbc221945734681d4c61e6786006,
-        type: 3}
-      propertyPath: LevelTunings.Array.data[11].GridPrefab
-      value: 
-      objectReference: {fileID: 7663904076907319302, guid: a84aac741312a03489f0396f17cdb433,
-        type: 3}
-    - target: {fileID: 7530621767482014076, guid: c105cbc221945734681d4c61e6786006,
-        type: 3}
-      propertyPath: LevelTunings.Array.data[16].GridPrefab
-      value: 
-      objectReference: {fileID: 7663904076907319302, guid: b0e39f871dedf1544b316ecfdd4dd32e,
-        type: 3}
     - target: {fileID: 7530621767482014077, guid: c105cbc221945734681d4c61e6786006,
         type: 3}
       propertyPath: m_Name

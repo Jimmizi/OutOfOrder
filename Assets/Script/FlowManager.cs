@@ -74,7 +74,7 @@ public class FlowManager : MonoBehaviour
         GameOver
     }
 
-    [HideInInspector]
+    
     public bool DebugPassCurrentLevel = false;
 
 #if UNITY_EDITOR
@@ -260,6 +260,8 @@ public class FlowManager : MonoBehaviour
 
     public string GetNameForCurrentLevel()
     {
+        return "";
+
         if (LevelTunings.Count == 0)
         {
             return "";
@@ -267,7 +269,7 @@ public class FlowManager : MonoBehaviour
 
         if (CurrentLevel >= LevelTunings.Count)
         {
-            return "???";
+            return "";
         }
 
         return LevelTunings[CurrentLevel].LevelName;
@@ -472,7 +474,7 @@ public class FlowManager : MonoBehaviour
                 TotalScore += Score_CollectedPellet * 5; // 5 cogs needed to progress to this point
             }
         }
-        
+
         if (CurrentLevel == 0 && !activatedTutorialOne)
         {
             LevelOneTutorialObject.SetActive(true);
@@ -489,6 +491,8 @@ public class FlowManager : MonoBehaviour
         {
             LevelTwoTutorialObject?.SetActive(false);
         }
+
+
     }
 
     bool KeyPressedToProgressFlow()
@@ -700,13 +704,14 @@ public class FlowManager : MonoBehaviour
 
         ProcessCogsCollectedFlashing();
 
-#if UNITY_EDITOR
-        if (DebugPassCurrentLevel)
-        {
-            DebugPassCurrentLevel = false;
-            ProgressCurrentLevel();
-        }
-#endif
+//#if UNITY_EDITOR
+//        if (DebugPassCurrentLevel)
+//        {
+//            DebugPassCurrentLevel = false;
+//            ProgressCurrentLevel();
+//            return;
+//        }
+//#endif
 
         scoreIntervalTimer += GameConfig.GetDeltaTime();
         if (scoreIntervalTimer >= Score_InternalInSeconds)
