@@ -73,7 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: dc6d232fce4431345b00d1e959ff6b09, type: 3}
+  m_Sprite: {fileID: 5638259562752074330, guid: 6514c4bfd9aa0964bb7f5e11b1666e71,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,6 +99,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseNonLinearMovement: 1
   MoveSpeed: 5
+  leftSprite: {fileID: 17426746270384133, guid: 6514c4bfd9aa0964bb7f5e11b1666e71,
+    type: 3}
+  rightSprite: {fileID: -3378959473338303302, guid: 6514c4bfd9aa0964bb7f5e11b1666e71,
+    type: 3}
+  upSprite: {fileID: 5332947737335612695, guid: 6514c4bfd9aa0964bb7f5e11b1666e71,
+    type: 3}
+  downSprite: {fileID: 5638259562752074330, guid: 6514c4bfd9aa0964bb7f5e11b1666e71,
+    type: 3}
 --- !u!50 &3001820882785286742
 Rigidbody2D:
   serializedVersion: 4
@@ -132,6 +141,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.5, y: 0.5}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.5
