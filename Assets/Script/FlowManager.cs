@@ -84,8 +84,7 @@ public class FlowManager : MonoBehaviour
 
     [HideInInspector]
     public GameState CurrentState;
-
-    [HideInInspector]
+    
     public int CurrentLevel;
 
     [HideInInspector]
